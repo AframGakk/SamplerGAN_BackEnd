@@ -1,0 +1,9 @@
+obj/
+*/obj/
+.vscode/
+bin/
+*/bin/
+.vs/
+.DS_Store
+*/.DS_Store
+dist/
