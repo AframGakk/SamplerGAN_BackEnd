@@ -4,14 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SamplerGAN.UserService.Controllers
+namespace SamplerGAN.UserService.WebApi.Controllers
 {
-    [Route("api/users")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/users
-        [Route("")]
+        // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -19,8 +18,7 @@ namespace SamplerGAN.UserService.Controllers
         }
 
         // GET api/values/5
-        [Route("{id:int}")]
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
@@ -30,21 +28,18 @@ namespace SamplerGAN.UserService.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            return;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-            return;
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            return;
         }
     }
 }

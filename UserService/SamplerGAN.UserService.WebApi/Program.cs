@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace SamplerGAN.UserService
+namespace SamplerGAN.UserService.WebApi
 {
     public class Program
     {
