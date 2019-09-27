@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SamplerGAN.UserService.Models\SamplerGAN.UserService.Models.csproj" />
+    <ProjectReference Include="..\SamplerGAN.UserService.Services\SamplerGAN.UserService.Services.csproj" />
+  </ItemGroup>
+
 </Project>

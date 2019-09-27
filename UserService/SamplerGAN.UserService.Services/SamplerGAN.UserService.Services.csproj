@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\SamplerGAN.UserService.Models\SamplerGAN.UserService.Models.csproj" />
+    <ProjectReference Include="..\SamplerGAN.UserService.Repositories\SamplerGAN.UserService.Repositories.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>

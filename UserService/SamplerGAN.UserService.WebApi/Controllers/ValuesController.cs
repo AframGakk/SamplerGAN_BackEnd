@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SamplerGAN.UserService.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        // GET api/users
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
