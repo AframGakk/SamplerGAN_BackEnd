@@ -5,7 +5,7 @@ namespace SamplerGAN.UserService.Models.InputModels
     public class UserInputModel
     {
         [Required (ErrorMessage="User name is required")]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Required (ErrorMessage="First name is required")]
         public string  FirstName { get; set; }
