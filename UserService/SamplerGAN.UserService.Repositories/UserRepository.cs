@@ -40,5 +40,23 @@ namespace SamplerGAN.UserService.Repositories
             });
             return nextId;
         }
+
+        public void UpdateUserById(int id, UserInputModel body)
+        {
+            var entity = DataProvider.Users.FirstOrDefault(u => u.Id == id);
+            
+            //Update prop of the user
+            entity.UserName = body.UserName;
+            entity.FirstName = body.FirstName;
+            entity.LastName = body.LastName;
+            entity.Email = body.Email;
+            entity.Password = body.Password;
+        }
+
+        public void DeleteUserById(int id)
+        {
+            var entity = DataProvider.Users.FirstOrDefault(u => u.Id == id);
+            DataProvider.Users.Remove(entity);
+        }
     }
 }

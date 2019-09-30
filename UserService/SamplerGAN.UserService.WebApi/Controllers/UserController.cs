@@ -45,16 +45,18 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         {
             // ModelState Invalid check
             var newUserId = _userService.CreateUser(body);
+            //Think it would be better with CreatedAtRoute
             return GetUserById(newUserId);
         }
         
+        //Should this PATCH ??
         //UpdateUserById
         //http://localhost:5000/api/users/1 [Put]
         [Route("{id:int}")]
         [HttpPut]
-        // Taka body hérna líka inn
-        public IActionResult UpdateUserById(int id) {
-            return Ok(id);
+        public IActionResult UpdateUserById(int id, [FromBody] UserInputModel body) {
+            _userService.UpdateUserById(id, body);
+            return NoContent();
         }
 
         //DeleteUserById
@@ -62,7 +64,8 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         [Route("{id:int}")]
         [HttpDelete]
         public IActionResult DeleteUserById(int id) {
-            return Ok(id);
+            _userService.DeleteUserById(id);
+            return NoContent();
         }
         
     }

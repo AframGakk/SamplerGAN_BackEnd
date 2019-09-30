@@ -37,5 +37,15 @@ namespace SamplerGAN.UserService.Services
         {
             return _userRepository.CreateUser(body);
         }
+
+        public void UpdateUserById(int id, UserInputModel body)
+        {
+            _userRepository.UpdateUserById(id, body);
+        }
+
+        public void DeleteUserById(int id)
+        {
+            _userRepository.DeleteUserById(id);
+        }
     }
 }
