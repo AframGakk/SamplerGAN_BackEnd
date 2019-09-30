@@ -1,4 +1,6 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using SamplerGAN.UserService.Models.Exceptions;
 using SamplerGAN.UserService.Models.InputModels;
 using SamplerGAN.UserService.Services;
 
@@ -8,6 +10,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        // TODO Global error handling
 
         UserServices _userService = new UserServices();
 
@@ -26,17 +29,23 @@ namespace SamplerGAN.UserService.WebApi.Controllers
 
         //GetUserById
         //http://localhost:5000/api/users/1 [GET]
-        [Route("{id:int}")]
+        [Route("{id:int}", Name = "GetUserById")]
         [HttpGet]
-        public IActionResult GetUserById(int id) {
-            return Ok(id);
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userService.GetUserById(id);
+            return Ok(user);
         }
+        
         //CreateUser
         //http://localhost:5000/api/users [POST]
         [Route("")]
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserInputModel body) {
-            return Ok(body);
+        public IActionResult CreateUser([FromBody] UserInputModel body) 
+        {
+            // ModelState Invalid check
+            var newUserId = _userService.CreateUser(body);
+            return GetUserById(newUserId);
         }
         
         //UpdateUserById
