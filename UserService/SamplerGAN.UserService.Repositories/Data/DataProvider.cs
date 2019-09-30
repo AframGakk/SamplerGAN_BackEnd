@@ -6,7 +6,9 @@ namespace SamplerGAN.UserService.Repositories.Data
 {
     public class DataProvider
     {
-        public static List<User> Users = new List<User> 
+        
+        
+        /*public static List<User> Users = new List<User> 
         {
             new User {
                 Id = 1,
@@ -26,7 +28,7 @@ namespace SamplerGAN.UserService.Repositories.Data
                 Email = "villi@gmail.com",
                 Password = "123456abc",
                 UserCreated = DateTime.Now
-            }
+            }*/
         };
     }
 }
