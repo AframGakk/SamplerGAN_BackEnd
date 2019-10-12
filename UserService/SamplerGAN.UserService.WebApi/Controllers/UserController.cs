@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.UserService.Models.Exceptions;
 using SamplerGAN.UserService.Models.InputModels;
-using SamplerGAN.UserService.Services;
+using SamplerGAN.UserService.Services.Interfaces;
 
 namespace SamplerGAN.UserService.WebApi.Controllers
 {
@@ -11,33 +11,35 @@ namespace SamplerGAN.UserService.WebApi.Controllers
     public class UserController : ControllerBase
     {
         // TODO Global error handling
+        
+        // DI
+        private IUserServices _userService;
 
-        UserServices _userService = new UserServices();
+        public UserController(IUserServices userService)
+        {
+            _userService = userService;
+        }
 
-        // GRUD
-        //GetAllUsers
         //http://localhost:5000/api/users [GET]
         [Route("")]
         [HttpGet]
         public IActionResult GetAllUsers() {
             var userList = _userService.GetAllUsers();
-            if(userList == null) {
-                return StatusCode(500);
-            }
             return Ok(userList);
         }
 
-        //GetUserById
         //http://localhost:5000/api/users/1 [GET]
         [Route("{id:int}", Name = "GetUserById")]
         [HttpGet]
         public IActionResult GetUserById(int id)
         {
             var user = _userService.GetUserById(id);
+            /*if(user == null) {
+                return StatusCode(404);
+            }*/
             return Ok(user);
         }
-        
-        //CreateUser
+      
         //http://localhost:5000/api/users [POST]
         [Route("")]
         [HttpPost]
@@ -48,25 +50,21 @@ namespace SamplerGAN.UserService.WebApi.Controllers
             //Think it would be better with CreatedAtRoute
             return GetUserById(newUserId);
         }
-        
-        //Should this PATCH ??
-        //UpdateUserById
-        //http://localhost:5000/api/users/1 [Put]
+
+        //http://localhost:5000/api/users/1 [PATCH]
         [Route("{id:int}")]
-        [HttpPut]
+        [HttpPatch]
         public IActionResult UpdateUserById(int id, [FromBody] UserInputModel body) {
             _userService.UpdateUserById(id, body);
             return NoContent();
         }
 
-        //DeleteUserById
         //http://localhost:5000/api/users/1 [DELETE]
         [Route("{id:int}")]
         [HttpDelete]
         public IActionResult DeleteUserById(int id) {
             _userService.DeleteUserById(id);
             return NoContent();
-        }
-        
+        }   
     }
 }

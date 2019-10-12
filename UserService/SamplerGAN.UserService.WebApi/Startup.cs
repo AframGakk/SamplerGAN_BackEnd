@@ -6,10 +6,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SamplerGAN.UserService.Models.Entities;
+using SamplerGAN.UserService.Repositories.Implementations;
+using SamplerGAN.UserService.Repositories.Interfaces;
+using SamplerGAN.UserService.Services.Interfaces;
+using SamplerGAN.UserService.Services.Implementations;
 
 namespace SamplerGAN.UserService.WebApi
 {
@@ -26,6 +32,15 @@ namespace SamplerGAN.UserService.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<UserContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.Configure<ApiBehaviorOptions>(opt => 
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
