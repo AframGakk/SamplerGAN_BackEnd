@@ -6,5 +6,3 @@ Authentication Service
 Metadata Service  
 Sample sound Service  
 User Service  
-
-
