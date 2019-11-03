@@ -18,7 +18,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets all files by user id
         [Route("user/{userId:int}/file")]
         [HttpGet]
-        public IActionResult GetAllFilesByUserId() 
+        public IActionResult GetAllFilesByUserId(int userId) 
         {
             return Ok();
         }
@@ -27,7 +27,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets all folders by user id
         [Route("user/{userId:int}/folder")]
         [HttpGet]
-        public IActionResult GetAllFoldersByUserId()
+        public IActionResult GetAllFoldersByUserId(int userId)
         {
             return Ok();
         }
@@ -36,7 +36,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets file by userid, fileid
         [Route("user/{userId:int}/file/{fileId:int}")]
         [HttpGet]
-        public IActionResult GetFileByUserIdAndFileId()
+        public IActionResult GetFileByUserIdAndFileId(int userId, int fileId)
         {
             return Ok();
         }
@@ -45,7 +45,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets folder by userid, folderid 
         [Route("user/{userId:int}/folder/{folderId:int}")]
         [HttpGet]
-        public IActionResult GetFolderByUserIdAndFolderId()
+        public IActionResult GetFolderByUserIdAndFolderId(int userId, int folderId)
         {
             return Ok();
         }
@@ -54,7 +54,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create file by user id
         [Route("user/{userId:int}/file")]
         [HttpPost]
-        public IActionResult CreateFileByUserId()
+        public IActionResult CreateFileByUserId(int userId)
         {
             return Ok();
         }
@@ -63,7 +63,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create folder by user id
         [Route("user/{userId:int}/folder")]
         [HttpPost]
-        public IActionResult CreateFolderByUserId()
+        public IActionResult CreateFolderByUserId(int userId)
         {
             return Ok();
         }
@@ -72,7 +72,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update file by file id
         [Route("file/{fileId:int}")]
         [HttpPut]
-        public IActionResult UpdateFileByFileId()
+        public IActionResult UpdateFileByFileId(int fileId)
         {
             return Ok();
         }
@@ -81,7 +81,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPut]
-        public IActionResult UpdateFolderByFolderId()
+        public IActionResult UpdateFolderByFolderId(int folderId)
         {
             return Ok();
         }
@@ -90,7 +90,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update partially file by file id
         [Route("file/{fileId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFilePartiallyByFileId()
+        public IActionResult UpdateFilePartiallyByFileId(int fileId)
         {
             return Ok();
         }
@@ -99,7 +99,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update partially folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFolderPartiallyByFolderId()
+        public IActionResult UpdateFolderPartiallyByFolderId(int folderId)
         {
             return Ok();
         }
@@ -108,7 +108,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Delete file by fileid
         [Route("file/{fileId:int}")]
         [HttpDelete]
-        public IActionResult DeleteFileById()
+        public IActionResult DeleteFileById(int fileId)
         {
             return Ok();
         }
@@ -117,7 +117,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Delete folder by folderid
         [Route("folder/{folderId:int}")]
         [HttpDelete]
-        public IActionResult DeleteFolderById() 
+        public IActionResult DeleteFolderById(int folderId) 
         {
             return Ok();
         }

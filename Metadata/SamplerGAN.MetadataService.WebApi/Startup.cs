@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SamplerGAN.MetadataService.WebApi.ExceptionHandlerExtensions;
 
 namespace SamplerGAN.MetadataService.WebApi
 {
@@ -40,7 +41,8 @@ namespace SamplerGAN.MetadataService.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
+            app.UseGlobalExceptionHandler();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
