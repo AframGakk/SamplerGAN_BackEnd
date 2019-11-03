@@ -22,7 +22,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
         // returns the user model with JWT token  
         [Route("authenticate")]
         [HttpPost]
-        public IActionResult Authenticate([FromBody]User body)
+        public IActionResult Authenticate([FromBody] User body)
         {
             var user = _loginService.Authenticate(body.Username, body.Password);
 

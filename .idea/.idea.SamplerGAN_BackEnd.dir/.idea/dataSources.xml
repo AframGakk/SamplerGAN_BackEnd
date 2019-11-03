@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://34.89.28.185:5432/user-database</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="metadata-database@34.89.28.185" uuid="c09964c3-efb3-4af6-a7be-37313d60c08e">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://34.89.28.185:5432/metadata-database</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -11,8 +11,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
     [ApiController]
     public class MetadataController : ControllerBase
     {
-        // TODO Global exception handler
-        
         // DI
         
         //http://localhost:5002/api/user/{id}/file/ [GET]
