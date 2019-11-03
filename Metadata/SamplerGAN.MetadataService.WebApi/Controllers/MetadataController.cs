@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
 {
@@ -18,9 +19,14 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets all files by user id
         [Route("user/{userId:int}/file")]
         [HttpGet]
-        public IActionResult GetAllFilesByUserId(int userId) 
+        public IActionResult GetAllFilesByUserId(int userId)
         {
-            return Ok();
+            var user = userId;
+            if (user != 0)
+            {
+                throw new ResourceNotFoundException();
+            }
+            return Ok(user);
         }
         
         //http://localhost:5002/api/user/{id}/folder/ [GET]
