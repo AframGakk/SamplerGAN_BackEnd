@@ -1,3 +1,6 @@
 
 # Default ignored files
 /.idea.SamplerGAN_BackEnd.dir/.idea/workspace.xml
+# Datasource local storage ignored files
+/.idea.SamplerGAN_BackEnd.dir/.idea/dataSources/
+/.idea.SamplerGAN_BackEnd.dir/.idea/dataSources.local.xml

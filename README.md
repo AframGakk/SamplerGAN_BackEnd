@@ -1,8 +1,10 @@
 # README
-### SamplerGan_BackEnd
+### SamplerGAN BackEnd
 This README is about
 
-Authentication
-User Service
-Metadata Service
-Sample sound Service
+Authentication Service  
+Metadata Service  
+Sample sound Service  
+User Service  
+
+
