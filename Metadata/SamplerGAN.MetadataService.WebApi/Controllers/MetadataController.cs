@@ -12,52 +12,54 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
     {
         // TODO Global exception handler
         
-        // GET all files by user id /api/user/{id}/file/
-        [Route("user/{id:int}/file")]
+        // DI
+        
+        // Gets all files by user id /api/user/{id}/file/
+        [Route("user/{userId:int}/file")]
         [HttpGet]
         
-        // GET all folders by user id /api/user/{id}/folder/
-        [Route("user/{id:int}/folder")]
+        // Gets all folders by user id /api/user/{id}/folder/
+        [Route("user/{userId:int}/folder")]
         [HttpGet]
         
-        // GET file by userid, fileid /api/user/{id}/file/{id}
-        [Route("user/{id:int}/file/{id:int}")]
+        // Gets file by userid, fileid /api/user/{id}/file/{id}
+        [Route("user/{userId:int}/file/{fileId:int}")]
         [HttpGet]
         
-        // GET folder by userid, folderid /api/user/{id}/folder/{id}
-        [Route("user/{id:int}/folder/{id:int}")]
+        // Gets folder by userid, folderid /api/user/{id}/folder/{id}
+        [Route("user/{userId:int}/folder/{folderId:int}")]
         [HttpGet]
         
-        // POST file by user id /api/user/{id}/file/
-        [Route("user/{id:int}/file")]
+        // Create file by user id /api/user/{id}/file/
+        [Route("user/{userId:int}/file")]
         [HttpPost]
         
-        // POST folder by user id /api/user/{id}/folder/
-        [Route("user/{id:int}/folder")]
+        // Create folder by user id /api/user/{id}/folder/
+        [Route("user/{userId:int}/folder")]
         [HttpPost]
         
-        // PUT file by file id /api/file/{id}
-        [Route("file/{id:int}")]
+        // Update file by file id /api/file/{id}
+        [Route("file/{fileId:int}")]
         [HttpPut]
         
-        // PUT folder by folder id /api/folder/{id}
-        [Route("folder/{id:int}")]
+        // Update folder by folder id /api/folder/{id}
+        [Route("folder/{folderId:int}")]
         [HttpPut]
         
-        // PATCH file by file id /api/file/{id}
-        [Route("file/{id:int}")]
+        // Update partially file by file id /api/file/{id}
+        [Route("file/{fileId:int}")]
         [HttpPatch]
         
-        // PATCH folder by folder id /api/folder/{id}
-        [Route("folder/{id:int}")]
+        // Update partially folder by folder id /api/folder/{id}
+        [Route("folder/{folderId:int}")]
         [HttpPatch]
         
-        // DELETE file by fileid /api/file/{id}
-        [Route("file/{id:int}")]
+        // Delete file by fileid /api/file/{id}
+        [Route("file/{fileId:int}")]
         [HttpDelete]
         
-        // DELETE folder by folderid /api/folder/{id}
-        [Route("folder/{id:int}")]
+        // Delete folder by folderid /api/folder/{id}
+        [Route("folder/{folderId:int}")]
         [HttpDelete]
     }
 }
