@@ -11,7 +11,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers
     public class UserController : ControllerBase
     {
         // TODO Global error handling
-        
+
         // DI
         private IUserServices _userService;
 
@@ -23,12 +23,13 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users [GET]
         [Route("")]
         [HttpGet]
-        public IActionResult GetAllUsers() {
+        public IActionResult GetAllUsers()
+        {
             var userList = _userService.GetAllUsers();
             return Ok(userList);
         }
 
-        //http://localhost:5000/api/users/1 [GET]
+        //http://localhost:5000/api/users/{id} [GET]
         [Route("{id:int}", Name = "GetUserById")]
         [HttpGet]
         public IActionResult GetUserById(int id)
@@ -39,11 +40,11 @@ namespace SamplerGAN.UserService.WebApi.Controllers
             }*/
             return Ok(user);
         }
-      
+
         //http://localhost:5000/api/users [POST]
         [Route("")]
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserInputModel body) 
+        public IActionResult CreateUser([FromBody] UserInputModel body)
         {
             // ModelState Invalid check
             var newUserId = _userService.CreateUser(body);
@@ -51,7 +52,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers
             return GetUserById(newUserId);
         }
 
-        //http://localhost:5000/api/users/1 [PATCH]
+        //http://localhost:5000/api/users/{id} [PATCH]
         [Route("{id:int}")]
         [HttpPatch]
         public IActionResult UpdateUserById(int id, [FromBody] UserInputModel body) {
@@ -59,12 +60,12 @@ namespace SamplerGAN.UserService.WebApi.Controllers
             return NoContent();
         }
 
-        //http://localhost:5000/api/users/1 [DELETE]
+        //http://localhost:5000/api/users/{id} [DELETE]
         [Route("{id:int}")]
         [HttpDelete]
         public IActionResult DeleteUserById(int id) {
             _userService.DeleteUserById(id);
             return NoContent();
-        }   
+        }
     }
 }

@@ -14,52 +14,112 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         
         // DI
         
-        // Gets all files by user id /api/user/{id}/file/
+        //http://localhost:5002/api/user/{id}/file/ [GET]
+        // Gets all files by user id
         [Route("user/{userId:int}/file")]
         [HttpGet]
+        public IActionResult GetAllFilesByUserId() 
+        {
+            return Ok();
+        }
         
-        // Gets all folders by user id /api/user/{id}/folder/
+        //http://localhost:5002/api/user/{id}/folder/ [GET]
+        // Gets all folders by user id
         [Route("user/{userId:int}/folder")]
         [HttpGet]
+        public IActionResult GetAllFoldersByUserId()
+        {
+            return Ok();
+        }
         
-        // Gets file by userid, fileid /api/user/{id}/file/{id}
+        //http://localhost:5002/api/user/{id}/file/{id} [GET]
+        // Gets file by userid, fileid
         [Route("user/{userId:int}/file/{fileId:int}")]
         [HttpGet]
+        public IActionResult GetFileByUserIdAndFileId()
+        {
+            return Ok();
+        }
         
-        // Gets folder by userid, folderid /api/user/{id}/folder/{id}
+        //http://localhost:5002/api/user/{id}/folder/{id} [GET]
+        // Gets folder by userid, folderid 
         [Route("user/{userId:int}/folder/{folderId:int}")]
         [HttpGet]
+        public IActionResult GetFolderByUserIdAndFolderId()
+        {
+            return Ok();
+        }
         
-        // Create file by user id /api/user/{id}/file/
+        //http://localhost:5002/api/user/{id}/file/ [POST]
+        // Create file by user id
         [Route("user/{userId:int}/file")]
         [HttpPost]
+        public IActionResult CreateFileByUserId()
+        {
+            return Ok();
+        }
         
-        // Create folder by user id /api/user/{id}/folder/
+        //http://localhost:5002/api/user/{id}/folder/ [POST]
+        // Create folder by user id
         [Route("user/{userId:int}/folder")]
         [HttpPost]
+        public IActionResult CreateFolderByUserId()
+        {
+            return Ok();
+        }
         
-        // Update file by file id /api/file/{id}
+        //http://localhost:5002/api/file/{id} [PUT]
+        // Update file by file id
         [Route("file/{fileId:int}")]
         [HttpPut]
+        public IActionResult UpdateFileByFileId()
+        {
+            return Ok();
+        }
         
-        // Update folder by folder id /api/folder/{id}
+        //http://localhost:5002/api/folder/{id} [PUT]
+        // Update folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPut]
+        public IActionResult UpdateFolderByFolderId()
+        {
+            return Ok();
+        }
         
-        // Update partially file by file id /api/file/{id}
+        //http://localhost:5002/api/file/{id} [PATCH]
+        // Update partially file by file id
         [Route("file/{fileId:int}")]
         [HttpPatch]
+        public IActionResult UpdateFilePartiallyByFileId()
+        {
+            return Ok();
+        }
         
-        // Update partially folder by folder id /api/folder/{id}
+        //http://localhost:5002/api/folder/{id} [PATCH]
+        // Update partially folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPatch]
+        public IActionResult UpdateFolderPartiallyByFolderId()
+        {
+            return Ok();
+        }
         
-        // Delete file by fileid /api/file/{id}
+        //http://localhost:5002/api/file/{id} [DELETE]
+        // Delete file by fileid
         [Route("file/{fileId:int}")]
         [HttpDelete]
+        public IActionResult DeleteFileById()
+        {
+            return Ok();
+        }
         
-        // Delete folder by folderid /api/folder/{id}
+        //http://localhost:5002/api/folder/{id} [DELETE]
+        // Delete folder by folderid
         [Route("folder/{folderId:int}")]
         [HttpDelete]
+        public IActionResult DeleteFolderById() 
+        {
+            return Ok();
+        }
     }
 }
