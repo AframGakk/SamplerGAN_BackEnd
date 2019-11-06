@@ -9,6 +9,7 @@ namespace SamplerGAN.MetadataService.WebApi.Models.Entities
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {}
 
         public DbSet<File> file { get; set; }
+        public DbSet<Folder> folder { get; set; }
 
     }
 }

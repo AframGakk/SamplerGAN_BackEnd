@@ -6,5 +6,6 @@ namespace SamplerGAN.MetadataService.WebApi.Services
     public interface IMetadataServices
     {
         IEnumerable<FileDto> GetAllFilesByUserId(int id);
+        IEnumerable<FolderDto> GetAllFoldersByUserId(int id);
     }
 }

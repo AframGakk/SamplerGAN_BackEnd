@@ -29,9 +29,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         public IActionResult GetAllFilesByUserId(int userId)
         {
             var files = _metaService.GetAllFilesByUserId(userId);
-            if (files == null)
+            if (!files.Any())
             {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("This user has no files");
             }
             return Ok(files);
         }
@@ -42,7 +42,12 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAllFoldersByUserId(int userId)
         {
-            return Ok();
+            var folders = _metaService.GetAllFoldersByUserId(userId);
+            if(!folders.Any())
+            {
+                throw new ResourceNotFoundException("This user has no folders");
+            }
+            return Ok(folders);
         }
         
         //http://localhost:5002/api/user/{id}/file/{id} [GET]

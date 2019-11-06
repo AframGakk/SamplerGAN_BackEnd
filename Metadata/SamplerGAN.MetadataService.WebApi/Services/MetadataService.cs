@@ -20,5 +20,11 @@ namespace SamplerGAN.MetadataService.WebApi.Services
             return files;
 
         }
+
+        public IEnumerable<FolderDto> GetAllFoldersByUserId(int id) 
+        {
+            var folders = _metaRepository.GetAllFoldersByUserId(id);
+            return folders;
+        }
     }
 }
