@@ -70,7 +70,12 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [HttpGet]
         public IActionResult GetFolderByUserIdAndFolderId(int userId, int folderId)
         {
-            return Ok();
+            var folder = _metaService.GetFolderByUserIdAndFolderId(userId, folderId);
+            if(!folder.Any())
+            {
+                throw new ResourceNotFoundException("No folder was found with these requirements");
+            }
+            return Ok(folder);
         }
         
         //http://localhost:5002/api/user/{id}/file/ [POST]

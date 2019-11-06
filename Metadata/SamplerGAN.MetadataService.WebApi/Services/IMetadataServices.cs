@@ -8,5 +8,6 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         IEnumerable<FileDto> GetAllFilesByUserId(int id);
         IEnumerable<FolderDto> GetAllFoldersByUserId(int id);
         IEnumerable<FileDetailDto> GetFileByUserIdAndFileId(int userId, int fileId);
+        IEnumerable<FolderDetailDto> GetFolderByUserIdAndFolderId(int userId, int folderId);
     }
 }

@@ -62,5 +62,18 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                             };
             return entity;
         }
+        public IEnumerable<FolderDetailDto> GetFolderByUserIdAndFolderId(int userId, int folderId)
+        {
+            var entity = from item in _db.folder
+                            where(item.User == userId) && (item.id == folderId)
+                            select new FolderDetailDto {
+                                Id = item.id,
+                                Name = item.Name,
+                                Parent = item.Parent,
+                                User = item.User,
+                                FolderCreated = item.FolderCreated
+                            };
+            return entity;
+        }
     }        
 }
