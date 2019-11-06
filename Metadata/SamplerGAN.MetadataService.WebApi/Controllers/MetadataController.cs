@@ -51,12 +51,17 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         }
         
         //http://localhost:5002/api/user/{id}/file/{id} [GET]
-        // Gets file by userid, fileid
+        // Get file by userid and fileid ** Should be one file
         [Route("user/{userId:int}/file/{fileId:int}")]
         [HttpGet]
         public IActionResult GetFileByUserIdAndFileId(int userId, int fileId)
         {
-            return Ok();
+            var file = _metaService.GetFileByUserIdAndFileId(userId, fileId);
+            if(!file.Any())
+            {
+                throw new ResourceNotFoundException("No file was found with these requirements");
+            }
+            return Ok(file);
         }
         
         //http://localhost:5002/api/user/{id}/folder/{id} [GET]

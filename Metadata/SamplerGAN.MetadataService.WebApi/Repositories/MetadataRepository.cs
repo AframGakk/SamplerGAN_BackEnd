@@ -26,7 +26,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
             }).ToList().Where(User == id);*/
 
             //Console.WriteLine("From Repo" + id);
-            var retList = from items in _db.file
+            var entities = from items in _db.file
                             where(items.User == id)
                             select new FileDto {
                                 Name = items.Name,
@@ -34,18 +34,33 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                                 User = items.User
                             };
             
-            return retList;
+            return entities;
         }    
         public IEnumerable<FolderDto> GetAllFoldersByUserId(int id)
         {
-            var retList = from items in _db.folder
+            var entities = from items in _db.folder
                             where(items.User == id)
                             select new FolderDto {
                                 Name = items.Name,
                                 Parent = items.Parent,
                                 User = items.User
                             };
-            return retList;
+            return entities;
+        }
+        public IEnumerable<FileDetailDto> GetFileByUserIdAndFileId(int userId, int fileId)
+        {
+            var entity = from item in _db.file
+                            where(item.User == userId) && (item.id == fileId)
+                            select new FileDetailDto {
+                                Id = item.id,
+                                Name = item.Name,
+                                Sound_type = item.Sound_type,
+                                Location = item.Location,
+                                Parent = item.Parent,
+                                User = item.User,
+                                FileCreated = item.FileCreated
+                            };
+            return entity;
         }
     }        
 }
