@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
 
-namespace SamplerGAN.MetadataService.WebApi.Repositories
+namespace SamplerGAN.MetadataService.WebApi.Services
 {
-    public interface IMetadataRepository
+    public interface IMetadataServices
     {
         IEnumerable<FileDto> GetAllFilesByUserId(int id);
     }

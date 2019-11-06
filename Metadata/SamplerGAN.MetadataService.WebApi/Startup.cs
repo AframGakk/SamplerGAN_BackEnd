@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SamplerGAN.MetadataService.WebApi.ExceptionHandlerExtensions;
+using SamplerGAN.MetadataService.WebApi.Models.Entities;
+using SamplerGAN.MetadataService.WebApi.Repositories;
+using SamplerGAN.MetadataService.WebApi.Services;
 
 namespace SamplerGAN.MetadataService.WebApi
 {
@@ -27,6 +31,10 @@ namespace SamplerGAN.MetadataService.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<MetaContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                services.AddTransient<IMetadataServices, MetadataServices>();
+                services.AddTransient<IMetadataRepository, MetadataRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

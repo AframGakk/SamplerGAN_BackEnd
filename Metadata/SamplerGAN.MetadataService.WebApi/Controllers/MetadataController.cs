@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
+using SamplerGAN.MetadataService.WebApi.Services;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
 {
@@ -12,6 +13,14 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
     public class MetadataController : ControllerBase
     {
         // DI
+        private IMetadataServices _metaService;
+
+        public MetadataController(IMetadataServices metaService)
+        {
+            _metaService = metaService;
+        }
+
+        // modelstate validation
         
         //http://localhost:5002/api/user/{id}/file/ [GET]
         // Gets all files by user id
@@ -19,12 +28,12 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAllFilesByUserId(int userId)
         {
-            var user = userId;
-            if (user != 0)
+            var files = _metaService.GetAllFilesByUserId(userId);
+            if (files == null)
             {
                 throw new ResourceNotFoundException();
             }
-            return Ok(user);
+            return Ok(files);
         }
         
         //http://localhost:5002/api/user/{id}/folder/ [GET]

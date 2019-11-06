@@ -11,6 +11,7 @@ namespace SamplerGAN.UserService.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
+        // Endurhugsa þetta vinnsla á að vera í Service, hrá gögn úr data
         // DI
         private UserContext _db;
         public UserRepository(UserContext db)
@@ -48,7 +49,6 @@ namespace SamplerGAN.UserService.Repositories.Implementations
                 UserCreated = entity.UserCreated
             };
         }
-
         public int CreateUser(UserInputModel body)
         {
             var nextId = _db.user.Count() + 1;
