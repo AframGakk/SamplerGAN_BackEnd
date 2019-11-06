@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
 using SamplerGAN.MetadataService.WebApi.Models.Entities;
+using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 
 namespace SamplerGAN.MetadataService.WebApi.Repositories
 {
@@ -74,6 +75,18 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                                 FolderCreated = item.FolderCreated
                             };
             return entity;
+        }
+        public void CreateFileByUserId(FileInputModel body, int userId)
+        {
+            _db.file.Add(new File 
+            {
+                Name = body.Name,
+                Sound_type = body.Sound_type,
+                Location = body.Location,
+                Parent = body.Parent,
+                User = userId
+            });
+            _db.SaveChanges();
         }
     }        
 }

@@ -23,7 +23,7 @@ namespace SamplerGAN.MetadataService.WebApi.ExceptionHandlerExtensions
                     }
                     else if (exception is ModelFormatException)
                     {
-                        statusCode = (int) HttpStatusCode.PreconditionFailed;
+                        statusCode = (int) HttpStatusCode.BadRequest;
                     }
                     
                     // More errors ? Auth

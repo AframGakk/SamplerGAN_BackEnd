@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
+using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Services;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
@@ -82,9 +83,15 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create file by user id
         [Route("user/{userId:int}/file")]
         [HttpPost]
-        public IActionResult CreateFileByUserId(int userId)
+        public IActionResult CreateFileByUserId([FromBody] FileInputModel body, int userId)
         {
-            return Ok();
+            if(!ModelState.IsValid) 
+            {
+                throw new ModelFormatException("Input model was not properly formatted");
+            }
+            // vill ég skila einhverju meira hérna en bara created ?
+            _metaService.CreateFileByUserId(body, userId);
+            return StatusCode(201);
         }
         
         //http://localhost:5002/api/user/{id}/folder/ [POST]

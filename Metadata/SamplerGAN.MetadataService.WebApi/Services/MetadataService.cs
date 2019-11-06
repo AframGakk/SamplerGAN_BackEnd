@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
+using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Repositories;
 
 namespace SamplerGAN.MetadataService.WebApi.Services
@@ -37,6 +38,11 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         {
             var folder = _metaRepository.GetFolderByUserIdAndFolderId(userId, folderId);
             return folder;
+        }
+
+        public void CreateFileByUserId(FileInputModel body, int userId)
+        {
+            _metaRepository.CreateFileByUserId(body, userId);
         }
     }
 }

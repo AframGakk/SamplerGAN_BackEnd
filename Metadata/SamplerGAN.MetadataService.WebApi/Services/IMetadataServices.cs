@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
+using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 
 namespace SamplerGAN.MetadataService.WebApi.Services
 {
@@ -9,5 +10,6 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         IEnumerable<FolderDto> GetAllFoldersByUserId(int id);
         IEnumerable<FileDetailDto> GetFileByUserIdAndFileId(int userId, int fileId);
         IEnumerable<FolderDetailDto> GetFolderByUserIdAndFolderId(int userId, int folderId);
+        void CreateFileByUserId (FileInputModel body, int userId);
     }
 }
