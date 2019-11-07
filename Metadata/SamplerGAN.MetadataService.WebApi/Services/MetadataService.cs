@@ -49,5 +49,14 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         {
             _metaRepository.CreateFolderByUserId(body, userId);
         }
+
+        public void DeleteFileById(int fileId)
+        {
+            _metaRepository.DeleteFileById(fileId);
+        }
+        public void DeleteFolderById(int folderId)
+        {
+            _metaRepository.DeleteFolderById(folderId);
+        }
     }
 }

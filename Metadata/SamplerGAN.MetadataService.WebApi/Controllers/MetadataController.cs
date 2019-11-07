@@ -21,8 +21,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         {
             _metaService = metaService;
         }
-
-        // modelstate validation
         
         //http://localhost:5002/api/user/{id}/file/ [GET]
         // Gets all files by user id
@@ -88,7 +86,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         {   
             if(!ModelState.IsValid)
             {
-                throw new ModelFormatException(ModelState.RetrieveErrorString());
+                // Throwing error seems like not working
+                //throw new ModelFormatException(ModelState.RetrieveErrorString());
+                return BadRequest("The input model was not correct");
             }
             // vill ég skila einhverju meira hérna en bara created ?
             _metaService.CreateFileByUserId(body, userId);
@@ -102,17 +102,19 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         public IActionResult CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
         {
             if(!ModelState.IsValid)
-            {
-                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            {   // Throwing error seems like not working
+                //throw new ModelFormatException(ModelState.RetrieveErrorString());
+                return BadRequest("The input model was not correct");
             }
             // vill ég skila einhverju meira hérna en bara created ?
             _metaService.CreateFolderByUserId(body, userId);
             return StatusCode(201);
         }
         
+        // Do we need put if we have patch and create ???
         //http://localhost:5002/api/file/{id} [PUT]
         // Update file by file id
-        [Route("file/{fileId:int}")]
+        /*[Route("file/{fileId:int}")]
         [HttpPut]
         public IActionResult UpdateFileByFileId(int fileId)
         {
@@ -127,7 +129,8 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         {
             return Ok();
         }
-        
+        */
+
         //http://localhost:5002/api/file/{id} [PATCH]
         // Update partially file by file id
         [Route("file/{fileId:int}")]
@@ -152,7 +155,8 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [HttpDelete]
         public IActionResult DeleteFileById(int fileId)
         {
-            return Ok();
+            _metaService.DeleteFileById(fileId);
+            return NoContent();
         }
         
         //http://localhost:5002/api/folder/{id} [DELETE]
@@ -161,7 +165,8 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [HttpDelete]
         public IActionResult DeleteFolderById(int folderId) 
         {
-            return Ok();
+            _metaService.DeleteFolderById(folderId);
+            return NoContent();
         }
     }
 }

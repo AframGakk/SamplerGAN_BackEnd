@@ -12,5 +12,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
         IEnumerable<FolderDetailDto> GetFolderByUserIdAndFolderId(int userId, int folderId);
         void CreateFileByUserId(FileInputModel body, int userId);
         void CreateFolderByUserId(FolderInputModel body, int userId);
+        void DeleteFileById(int fileId);
+        void DeleteFolderById(int folderId);
     }
 }

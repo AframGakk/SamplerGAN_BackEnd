@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
 using SamplerGAN.MetadataService.WebApi.Models.Entities;
+using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
 using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 
 namespace SamplerGAN.MetadataService.WebApi.Repositories
@@ -99,6 +100,26 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                 User = userId,
                 location = folderbody.Location
             });
+            _db.SaveChanges();
+        }
+        public void DeleteFileById(int fileId)
+        {
+            var entity =_db.file.FirstOrDefault(f => f.id == fileId);
+            if(entity == null)
+            {
+                throw new ResourceNotFoundException("No file with this id: " + fileId);
+            }
+            _db.file.Remove(entity);
+            _db.SaveChanges();
+        }
+        public void DeleteFolderById(int folderId)
+        {
+            var entity =_db.folder.FirstOrDefault(f => f.id == folderId);
+            if(entity == null)
+            {
+                throw new ResourceNotFoundException("No folder with this id: " + folderId);
+            }
+            _db.folder.Remove(entity);
             _db.SaveChanges();
         }
     }        
