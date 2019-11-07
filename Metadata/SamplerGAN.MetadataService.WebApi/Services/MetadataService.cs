@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SamplerGAN.MetadataService.WebApi.Models.Dtos;
+using SamplerGAN.MetadataService.WebApi.Models.Entities;
 using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Repositories;
 
@@ -48,6 +49,14 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         public void CreateFolderByUserId(FolderInputModel body, int userId)
         {
             _metaRepository.CreateFolderByUserId(body, userId);
+        }
+        public void UpdateFilePartiallyByFileId(FileInputModel body, int fileId)
+        {
+            _metaRepository.UpdateFilePartiallyByFileId(body, fileId);
+        }
+        public void UpdateFolderPartiallyByFolderId(FolderInputModel body, int folderId)
+        {
+            _metaRepository.UpdateFolderPartiallyByFolderId(body, folderId);
         }
 
         public void DeleteFileById(int fileId)

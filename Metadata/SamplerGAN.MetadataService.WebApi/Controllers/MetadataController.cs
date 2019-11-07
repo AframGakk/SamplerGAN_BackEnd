@@ -7,6 +7,7 @@ using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
 using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Services;
 using SamplerGAN.MetadataService.WebApi.Extensions;
+using SamplerGAN.MetadataService.WebApi.Models.Entities;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
 {
@@ -135,18 +136,20 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update partially file by file id
         [Route("file/{fileId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFilePartiallyByFileId(int fileId)
+        public IActionResult UpdateFilePartiallyByFileId([FromBody] FileInputModel body, int fileId)
         {
-            return Ok();
+            _metaService.UpdateFilePartiallyByFileId(body, fileId);
+            return NoContent();
         }
         
         //http://localhost:5002/api/folder/{id} [PATCH]
         // Update partially folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFolderPartiallyByFolderId(int folderId)
+        public IActionResult UpdateFolderPartiallyByFolderId([FromBody] FolderInputModel body, int folderId)
         {
-            return Ok();
+            _metaService.UpdateFolderPartiallyByFolderId(body, folderId);
+            return NoContent();
         }
         
         //http://localhost:5002/api/file/{id} [DELETE]

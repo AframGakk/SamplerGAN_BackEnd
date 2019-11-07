@@ -83,9 +83,9 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
             _db.file.Add(new File 
             {
                 Name = filebody.Name,
-                Sound_type = filebody.Sound_type,
+                Sound_type = filebody.Sound_type.Value,
                 Location = filebody.Location,
-                Parent = filebody.Parent,
+                Parent = filebody.Parent.Value,
                 User = userId
             });
             _db.SaveChanges();
@@ -96,10 +96,41 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
             _db.folder.Add(new Folder
             {
                 Name = folderbody.Name,
-                Parent = folderbody.Parent,
+                Parent = folderbody.Parent.Value,
                 User = userId,
                 location = folderbody.Location
             });
+            _db.SaveChanges();
+        }
+        public void UpdateFilePartiallyByFileId(FileInputModel body, int fileId)
+        {
+            var entity =_db.file.FirstOrDefault(f => f.id == fileId);
+            if(entity == null)
+            {
+                throw new ResourceNotFoundException("No file with this id: " + fileId);
+            }
+            //Update prop of the user if provided
+            if (!string.IsNullOrEmpty(body.Name)) { entity.Name = body.Name; }
+            if (body.Sound_type.HasValue) { entity.Sound_type = body.Sound_type.Value; }
+            if (!string.IsNullOrEmpty(body.Location)) { entity.Location = body.Location; }
+            if (body.Parent.HasValue) { entity.Parent = body.Parent.Value; }
+
+            _db.file.Update(entity);
+            _db.SaveChanges();
+        }
+        public void UpdateFolderPartiallyByFolderId(FolderInputModel body, int folderId)
+        {
+            var entity = _db.folder.FirstOrDefault(f => f.id == folderId);
+            if(entity == null)
+            {
+                throw new ResourceNotFoundException("No folder with this id: " + folderId);
+            }
+            //Update prop of the user if provided
+            if (!string.IsNullOrEmpty(body.Name)) { entity.Name = body.Name; }
+            if (body.Parent.HasValue) { entity.Parent = body.Parent.Value; }
+            if (!string.IsNullOrEmpty(body.Location)) { entity.location = body.Location; }
+
+            _db.folder.Update(entity);
             _db.SaveChanges();
         }
         public void DeleteFileById(int fileId)
