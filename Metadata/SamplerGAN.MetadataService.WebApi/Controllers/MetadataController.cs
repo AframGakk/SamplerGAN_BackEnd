@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
 using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Services;
+using SamplerGAN.MetadataService.WebApi.Extensions;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
 {
@@ -84,10 +85,10 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         [Route("user/{userId:int}/file")]
         [HttpPost]
         public IActionResult CreateFileByUserId([FromBody] FileInputModel body, int userId)
-        {
-            if(!ModelState.IsValid) 
+        {   
+            if(!ModelState.IsValid)
             {
-                throw new ModelFormatException("Input model was not properly formatted");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             // vill ég skila einhverju meira hérna en bara created ?
             _metaService.CreateFileByUserId(body, userId);
@@ -98,9 +99,15 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create folder by user id
         [Route("user/{userId:int}/folder")]
         [HttpPost]
-        public IActionResult CreateFolderByUserId(int userId)
+        public IActionResult CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
         {
-            return Ok();
+            if(!ModelState.IsValid)
+            {
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            }
+            // vill ég skila einhverju meira hérna en bara created ?
+            _metaService.CreateFolderByUserId(body, userId);
+            return StatusCode(201);
         }
         
         //http://localhost:5002/api/file/{id} [PUT]

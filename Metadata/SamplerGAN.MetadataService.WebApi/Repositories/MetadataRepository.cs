@@ -72,19 +72,32 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                                 Name = item.Name,
                                 Parent = item.Parent,
                                 User = item.User,
+                                Location = item.location,
                                 FolderCreated = item.FolderCreated
                             };
             return entity;
         }
-        public void CreateFileByUserId(FileInputModel body, int userId)
+        public void CreateFileByUserId(FileInputModel filebody, int userId)
         {
             _db.file.Add(new File 
             {
-                Name = body.Name,
-                Sound_type = body.Sound_type,
-                Location = body.Location,
-                Parent = body.Parent,
+                Name = filebody.Name,
+                Sound_type = filebody.Sound_type,
+                Location = filebody.Location,
+                Parent = filebody.Parent,
                 User = userId
+            });
+            _db.SaveChanges();
+        }
+
+        public void CreateFolderByUserId(FolderInputModel folderbody, int userId)
+        {
+            _db.folder.Add(new Folder
+            {
+                Name = folderbody.Name,
+                Parent = folderbody.Parent,
+                User = userId,
+                location = folderbody.Location
             });
             _db.SaveChanges();
         }

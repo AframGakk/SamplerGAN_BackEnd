@@ -11,5 +11,6 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
         IEnumerable<FileDetailDto> GetFileByUserIdAndFileId(int userId, int fileId);
         IEnumerable<FolderDetailDto> GetFolderByUserIdAndFolderId(int userId, int folderId);
         void CreateFileByUserId(FileInputModel body, int userId);
+        void CreateFolderByUserId(FolderInputModel body, int userId);
     }
 }

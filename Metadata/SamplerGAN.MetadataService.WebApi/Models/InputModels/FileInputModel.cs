@@ -15,6 +15,7 @@ namespace SamplerGAN.MetadataService.WebApi.Models.InputModels
 
         [Required (ErrorMessage="File parent is required")]
         public int Parent { get; set; }
+        // Not good
         public int User { get; set; }
     }
 }

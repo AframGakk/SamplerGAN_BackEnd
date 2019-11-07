@@ -44,5 +44,10 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         {
             _metaRepository.CreateFileByUserId(body, userId);
         }
+
+        public void CreateFolderByUserId(FolderInputModel body, int userId)
+        {
+            _metaRepository.CreateFolderByUserId(body, userId);
+        }
     }
 }

@@ -33,8 +33,13 @@ namespace SamplerGAN.MetadataService.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MetaContext>(opt =>
                 opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-                services.AddTransient<IMetadataServices, MetadataServices>();
-                services.AddTransient<IMetadataRepository, MetadataRepository>();
+            services.AddTransient<IMetadataServices, MetadataServices>();
+            services.AddTransient<IMetadataRepository, MetadataRepository>();
+
+            services.Configure<ApiBehaviorOptions>(opt => 
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
