@@ -87,8 +87,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         {   
             if(!ModelState.IsValid)
             {
-                // Throwing error seems like not working
-                //throw new ModelFormatException(ModelState.RetrieveErrorString());
                 return BadRequest("The input model was not correct");
             }
             // vill ég skila einhverju meira hérna en bara created ?
@@ -103,8 +101,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         public IActionResult CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
         {
             if(!ModelState.IsValid)
-            {   // Throwing error seems like not working
-                //throw new ModelFormatException(ModelState.RetrieveErrorString());
+            {
                 return BadRequest("The input model was not correct");
             }
             // vill ég skila einhverju meira hérna en bara created ?

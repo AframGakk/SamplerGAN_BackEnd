@@ -21,13 +21,6 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
 
         public IEnumerable<FileDto> GetAllFilesByUserId(int id)
         {
-            /*var retList = _db.file.Select(item => new FileDto {
-                Name = item.Name,
-                Sound_type = item.Sound_type,
-                User = item.User
-            }).ToList().Where(User == id);*/
-
-            //Console.WriteLine("From Repo" + id);
             var entities = from items in _db.file
                             where(items.User == id)
                             select new FileDto {
