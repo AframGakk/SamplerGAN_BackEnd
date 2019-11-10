@@ -22,8 +22,11 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
             _appSettings = appSettings.Value;
             _authRepostitory = authRepository;
         }
+        // Helper function so Validate Route in the Controller,
+        // returns the user id
         public int GetUserId(string username) {
-            return _authRepostitory.GetUserId(username);
+            var userId = _authRepostitory.GetUserId(username);
+            return userId;
         }
 
         public string Authenticate([FromBody] User body)
@@ -56,7 +59,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
 
                 return userToken;
             }
-            // ???
+            // ??? Take out before final
             return "HelloWhatToDoHere?";
         }
         
@@ -81,7 +84,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
             Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
             username = usernameClaim.Value;
             
-            // Testing
+            // TESTING - Take out before final
             Console.WriteLine("Hæ er í LoginService");
             Console.WriteLine(username);
 
