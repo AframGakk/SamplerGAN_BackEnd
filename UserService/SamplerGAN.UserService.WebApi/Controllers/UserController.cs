@@ -35,9 +35,6 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _userService.GetUserById(id);
-            /*if(user == null) {
-                return StatusCode(404);
-            }*/
             return Ok(user);
         }
 
@@ -46,10 +43,12 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserInputModel body)
         {
-            // ModelState Invalid check
+            if(!ModelState.IsValid)
+            {
+                return BadRequest("The input model was not correct");
+            }
             var newUserId = _userService.CreateUser(body);
-            //Think it would be better with CreatedAtRoute
-            return GetUserById(newUserId);
+            return StatusCode(201, newUserId);
         }
 
         //http://localhost:5000/api/users/{id} [PATCH]

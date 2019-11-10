@@ -11,7 +11,6 @@ namespace SamplerGAN.UserService.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        // Endurhugsa þetta vinnsla á að vera í Service, hrá gögn úr data
         // DI
         private UserContext _db;
         public UserRepository(UserContext db)
@@ -35,8 +34,7 @@ namespace SamplerGAN.UserService.Repositories.Implementations
             var entity = _db.user.FirstOrDefault(u => u.id == id);
             if (entity == null)
             {
-                throw new ContentNotFoundException(string.Format("Unable to find user by id:" + id));
-                //return null;
+                throw new ResourceNotFoundException("No user with this id: " + id);
             }
             
             return new UserDetailDto
@@ -66,6 +64,10 @@ namespace SamplerGAN.UserService.Repositories.Implementations
         public void UpdateUserById(int id, UserInputModel body)
         {
             var entity = _db.user.FirstOrDefault(u => u.id == id);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("No user with this id: " + id);
+            }
 
             //Update prop of the user if provided
             if (!string.IsNullOrEmpty(body.UserName)) { entity.UserName = body.UserName; }
@@ -80,7 +82,11 @@ namespace SamplerGAN.UserService.Repositories.Implementations
 
         public void DeleteUserById(int id)
         {
-            var entity = _db.user.First(u => u.id == id);
+            var entity = _db.user.FirstOrDefault(u => u.id == id);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("No user with this id: " + id);
+            }
             _db.user.Remove(entity);
             _db.SaveChanges();
         }
