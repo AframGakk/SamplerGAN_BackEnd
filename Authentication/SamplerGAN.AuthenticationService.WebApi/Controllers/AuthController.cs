@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.AuthenticationService.WebApi.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Services;
@@ -19,43 +20,50 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
         }
         
         // Authenticates user if username and password matches users in the database,
-        // returns the user model with JWT token  
+        // returns the users JWT token  
         [Route("authenticate")]
         [HttpPost]
         public IActionResult Authenticate([FromBody] User body)
         {
-            var user = _loginService.Authenticate(body.Username, body.Password);
+            var user = _loginService.Authenticate(body);
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+           if (user == null)
+           {
+               return BadRequest("Username or password is incorrect" );
+           }
+           // Returns a token 
 
             return Ok(user);
         }
 
         // If token and username matches then the user is validated
+        // and returns the user Id for other services
         [Route("validate")]
         [HttpGet]
-        public IActionResult Validate(string token, string username)
+        //public IActionResult Validate(string token, string username)
+        public IActionResult Validate(string username)
         {
+            var token = Request.Headers["Authorization"];
+            // TESTING - Take out later
+            //Console.WriteLine("Controller Validate");
+            //Console.WriteLine(token);
+
+            // Returns username with that token
             var user = _loginService.Validate(token);
 
-            /*
-            if(username.Equals(user)) 
-            {
-                return Ok(user);
-            }
-            return BadRequest(new { message = "Error with validating user" });
-            */
+            // No User with that token
             if (user == null)
             {
-                return StatusCode(418, new { message = "Error with validating user" });
+                return BadRequest( new { message = "Error with validating user" });
             }
-
-            if(username.Equals(user)) 
+            // If the incoming username matches the token username
+            if(user == username) 
             {
-                return Ok(user);
+                var userId = _loginService.GetUserId(username);
+                //return StatusCode(202, true);
+                return StatusCode(202, userId);
             }
-            return BadRequest(new { message = "Error with validating user" });
+            return StatusCode(403, new { message = "User does not match the JWT token provided" });
         }
         
     }

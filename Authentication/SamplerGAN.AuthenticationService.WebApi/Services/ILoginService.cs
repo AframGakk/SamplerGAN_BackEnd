@@ -5,7 +5,8 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
 {
     public interface ILoginService
     {
-        User Authenticate(string username, string password);
+        int GetUserId(string username);
+        string Authenticate(User body);
         string Validate(string token);
         ClaimsPrincipal GetPrincipal(string token);
     }
