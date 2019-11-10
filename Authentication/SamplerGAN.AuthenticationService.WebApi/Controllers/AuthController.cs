@@ -36,6 +36,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
         //public IActionResult Validate(string token, string username)
         public IActionResult Validate(string username)
         {
+            // Takes the JWT token from Authorization header
             var token = Request.Headers["Authorization"];
             // TESTING - Take out later
             //Console.WriteLine("Controller Validate");
