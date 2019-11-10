@@ -5,9 +5,10 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Helpers;
 using SamplerGAN.AuthenticationService.WebApi.Repositories;
+using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Services
 {
@@ -35,8 +36,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
             
             if (userName == null) 
             {
-                //throw exception
-                Console.WriteLine("No user with this username or password");
+                throw new ResourceNotFoundException("No user with this username and password");
             }
             else if(userName == body.UserName)
             {

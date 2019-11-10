@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 
-namespace SamplerGAN.AuthenticationService.WebApi.Entities
+namespace SamplerGAN.AuthenticationService.WebApi.Models.Entities
 {
     public class UserContext : DbContext
     {

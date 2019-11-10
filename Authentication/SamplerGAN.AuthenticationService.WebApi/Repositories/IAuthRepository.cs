@@ -1,4 +1,4 @@
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Repositories
 {

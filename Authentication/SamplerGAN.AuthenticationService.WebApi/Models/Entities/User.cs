@@ -1,6 +1,6 @@
 using System;
 
-namespace SamplerGAN.AuthenticationService.WebApi.Entities
+namespace SamplerGAN.AuthenticationService.WebApi.Models.Entities
 {
     public class User
     {

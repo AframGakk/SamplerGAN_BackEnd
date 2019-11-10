@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
 using SamplerGAN.AuthenticationService.WebApi.Services;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Controllers
@@ -9,8 +10,6 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        // TODO global exception handler
-
         //DI
         private ILoginService _loginService;
 
@@ -26,13 +25,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
         public IActionResult Authenticate([FromBody] User body)
         {
             var user = _loginService.Authenticate(body);
-
-           if (user == null)
-           {
-               return BadRequest("Username or password is incorrect" );
-           }
            // Returns a token 
-
             return Ok(user);
         }
 
@@ -54,7 +47,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
             // No User with that token
             if (user == null)
             {
-                return BadRequest( new { message = "Error with validating user" });
+                throw new ErrorValidatingUserException();
             }
             // If the incoming username matches the token username
             if(user == username) 
@@ -63,7 +56,8 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
                 //return StatusCode(202, true);
                 return StatusCode(202, userId);
             }
-            return StatusCode(403, new { message = "User does not match the JWT token provided" });
+            throw new MatchingUserJWTException();
+            //return StatusCode(403, new { message = "User does not match the JWT token provided" });
         }
         
     }

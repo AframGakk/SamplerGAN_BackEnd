@@ -14,10 +14,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Helpers;
 using SamplerGAN.AuthenticationService.WebApi.Repositories;
 using SamplerGAN.AuthenticationService.WebApi.Services;
+using SamplerGAN.AuthenticationService.WebApi.ExceptionHandlerExtensions;
 
 namespace SamplerGAN.AuthenticationService.WebApi
 {
@@ -89,7 +90,7 @@ namespace SamplerGAN.AuthenticationService.WebApi
                 .AllowAnyHeader());
 
             app.UseAuthentication();
-            
+            app.UseGlobalExceptionHandler();
             app.UseMvc();
         }
     }
