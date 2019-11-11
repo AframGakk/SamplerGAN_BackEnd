@@ -1,62 +1,68 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Helpers;
+using SamplerGAN.AuthenticationService.WebApi.Repositories;
+using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Services
 {
     public class LoginService : ILoginService
     {
-        // users hardcoded make Repo
-        private List<User> _users = new List<User>
-        { 
-            new User { Id = 1, FirstName = "Vilhjálmur Rúnar", LastName = "Vilhjálmsson", Username = "villi", Password = "test" },
-            new User { Id = 2, FirstName = "Ívar Kristinn", LastName = "Hallsson", Username = "ivarkristinn", Password = "test1" }
-        };
+        // DI
+        private IAuthRepository _authRepostitory;
         private readonly AppSettings _appSettings;
 
-        public LoginService(IOptions<AppSettings> appSettings)
+        public LoginService(IOptions<AppSettings> appSettings, IAuthRepository authRepository)
         {
             _appSettings = appSettings.Value;
+            _authRepostitory = authRepository;
+        }
+        // Helper function so Validate Route in the Controller,
+        // returns the user id
+        public int GetUserId(string username) {
+            var userId = _authRepostitory.GetUserId(username);
+            return userId;
         }
 
-        public User Authenticate(string username, string password)
+        public string Authenticate([FromBody] User body)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var userName = _authRepostitory.GetUserByNameAndPassword(body);
             
-            // return null if user not found
-            if (user == null)
-                return null;
-
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            if (userName == null) 
             {
-                Subject = new ClaimsIdentity(new Claim[] 
+                throw new ResourceNotFoundException("No user with this username and password");
+            }
+            else if(userName == body.UserName)
+            {
+                // authentication successful so generate jwt token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.Name, username)
-                }),
-                //Expires = DateTime.UtcNow.AddDays(7),
-                // Takes 6 min to expire
-		        Expires = DateTime.UtcNow.AddMinutes(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
+                    Subject = new ClaimsIdentity(new Claim[] 
+                    {
+                        new Claim(ClaimTypes.Name, body.UserName)
+                    }),
+                    //Expires = DateTime.UtcNow.AddDays(7),
+                    // Takes 6 min to expire
+                    Expires = DateTime.UtcNow.AddMinutes(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var userToken = tokenHandler.WriteToken(token);
 
-            // remove password before returning
-            user.Password = null;
-
-            return user;
+                return userToken;
+            }
+            // ??? Take out before final
+            return "HelloWhatToDoHere?";
         }
-
+        
         public string Validate(string token)
         {
             string username = null;
@@ -77,6 +83,10 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
 
             Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
             username = usernameClaim.Value;
+            
+            // TESTING - Take out before final
+            Console.WriteLine("Hæ er í LoginService");
+            Console.WriteLine(username);
 
             return username;
         }

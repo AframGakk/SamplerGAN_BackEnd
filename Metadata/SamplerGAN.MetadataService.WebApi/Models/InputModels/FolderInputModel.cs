@@ -8,9 +8,9 @@ namespace SamplerGAN.MetadataService.WebApi.Models.InputModels
         public string Name { get; set; }
 
         [Required (ErrorMessage="Folder parent is required")]
-        public int  Parent { get; set; }
-        // Not good
-        public int User { get; set; }
+        public int?  Parent { get; set; }
+        // The userId is in the route
+        //public int User { get; set; }
         [Required (ErrorMessage="Folder location is required")]
         public string Location { get; set; }
     }

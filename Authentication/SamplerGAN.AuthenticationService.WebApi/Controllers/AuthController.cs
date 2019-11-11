@@ -1,5 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
-using SamplerGAN.AuthenticationService.WebApi.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
+using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
 using SamplerGAN.AuthenticationService.WebApi.Services;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Controllers
@@ -8,8 +10,6 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        // TODO global exception handler
-
         //DI
         private ILoginService _loginService;
 
@@ -19,43 +19,46 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers
         }
         
         // Authenticates user if username and password matches users in the database,
-        // returns the user model with JWT token  
+        // returns the users JWT token  
         [Route("authenticate")]
         [HttpPost]
         public IActionResult Authenticate([FromBody] User body)
         {
-            var user = _loginService.Authenticate(body.Username, body.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
+            var user = _loginService.Authenticate(body);
+           // Returns a token 
             return Ok(user);
         }
 
         // If token and username matches then the user is validated
+        // and returns the user Id for other services
         [Route("validate")]
         [HttpGet]
-        public IActionResult Validate(string token, string username)
+        //public IActionResult Validate(string token, string username)
+        public IActionResult Validate(string username)
         {
+            // Takes the JWT token from Authorization header
+            var token = Request.Headers["Authorization"];
+            // TESTING - Take out later
+            //Console.WriteLine("Controller Validate");
+            //Console.WriteLine(token);
+
+            // Returns username with that token
             var user = _loginService.Validate(token);
 
-            /*
-            if(username.Equals(user)) 
-            {
-                return Ok(user);
-            }
-            return BadRequest(new { message = "Error with validating user" });
-            */
+            // No User with that token
             if (user == null)
             {
-                return StatusCode(418, new { message = "Error with validating user" });
+                throw new ErrorValidatingUserException();
             }
-
-            if(username.Equals(user)) 
+            // If the incoming username matches the token username
+            if(user == username) 
             {
-                return Ok(user);
+                var userId = _loginService.GetUserId(username);
+                //return StatusCode(202, true);
+                return StatusCode(202, userId);
             }
-            return BadRequest(new { message = "Error with validating user" });
+            throw new MatchingUserJWTException();
+            //return StatusCode(403, new { message = "User does not match the JWT token provided" });
         }
         
     }

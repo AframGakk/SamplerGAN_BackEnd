@@ -16,6 +16,7 @@ using SamplerGAN.UserService.Repositories.Implementations;
 using SamplerGAN.UserService.Repositories.Interfaces;
 using SamplerGAN.UserService.Services.Interfaces;
 using SamplerGAN.UserService.Services.Implementations;
+using SamplerGAN.UserService.WebApi.ExceptionHandlerExtensions;
 
 namespace SamplerGAN.UserService.WebApi
 {
@@ -57,6 +58,7 @@ namespace SamplerGAN.UserService.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseGlobalExceptionHandler();
             app.UseMvc();
         }
     }

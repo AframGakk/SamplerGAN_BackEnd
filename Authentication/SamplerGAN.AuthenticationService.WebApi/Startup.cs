@@ -8,13 +8,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Helpers;
+using SamplerGAN.AuthenticationService.WebApi.Repositories;
 using SamplerGAN.AuthenticationService.WebApi.Services;
+using SamplerGAN.AuthenticationService.WebApi.ExceptionHandlerExtensions;
 
 namespace SamplerGAN.AuthenticationService.WebApi
 {
@@ -32,6 +36,8 @@ namespace SamplerGAN.AuthenticationService.WebApi
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<UserContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -58,6 +64,7 @@ namespace SamplerGAN.AuthenticationService.WebApi
                 };
             });
             services.AddScoped<ILoginService, LoginService>();
+            services.AddTransient<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +90,7 @@ namespace SamplerGAN.AuthenticationService.WebApi
                 .AllowAnyHeader());
 
             app.UseAuthentication();
-            
+            app.UseGlobalExceptionHandler();
             app.UseMvc();
         }
     }
