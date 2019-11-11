@@ -20,9 +20,7 @@ class test_SampleRepo(TestCase):
 
         item = self.repo.getFileByLocation(location)
 
-        name = ''
-
-        self.assertTrue(item)
+        self.assertGreater(len(item), 0)
 
 
     def test_saveFileByLocation(self):

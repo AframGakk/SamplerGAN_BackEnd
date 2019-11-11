@@ -3,7 +3,7 @@ from flask import request, abort, json, jsonify, g
 import re
 
 from Services.SampleService.SampleService import SampleService
-from Services.AuthService.AuthService import authenticat_token
+from Services.AuthService.AuthService import authenticate_token
 
 _sampleService = SampleService()
 
@@ -13,26 +13,28 @@ app = Flask(__name__)
 @app.route('/api/sample', methods = ['POST', 'GET', 'DELETE', 'PUT' ])
 def job_request():
 
+    try:
+        data = json.loads(request.data)
+    except Exception:
+        msg = 'body is not json serializable'
+        abort(400, msg)
+
     # auth validation
     if not request.headers['authorization']:
         abort(403, 'Header missing authenticaiton key')
 
-    auth_id = authenticat_token(request.headers['authorization'])
+    if 'username' not in data:
+        msg = 'username is missing from body'
+        abort(400, msg)
+
+    auth_id = authenticate_token(request.headers['authorization'], data['username'])
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')
 
     if request.method == 'GET':
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
 
-        if 'userId' not in data:
-            msg = 'userId is missing from body'
-            abort(400, msg)
-        elif 'location' not in data:
+        if 'location' not in data:
             msg = 'location is missing from body'
             abort(400, msg)
 
@@ -51,16 +53,7 @@ def job_request():
 
     elif request.method == 'POST':
 
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
-
-        if 'userId' not in data:
-            msg = 'userId is missing from body'
-            abort(400, msg)
-        elif 'location' not in data:
+        if 'location' not in data:
             msg = 'location is missing from body'
             abort(400, msg)
         elif 'data' not in data:
@@ -80,16 +73,7 @@ def job_request():
 
     elif request.method == 'DELETE':
 
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
-
-        if 'userId' not in data:
-            msg = 'userId is missing from body'
-            abort(400, msg)
-        elif 'location' not in data:
+        if 'location' not in data:
             msg = 'location is missing from body'
             abort(400, msg)
 
@@ -106,16 +90,7 @@ def job_request():
 
     elif request.method == 'PUT':
 
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
-
-        if 'userId' not in data:
-            msg = 'userId is missing from body'
-            abort(400, msg)
-        elif 'new_location' not in data:
+        if 'new_location' not in data:
             msg = 'new_location is missing from body'
             abort(400, msg)
         elif 'old_location' not in data:
@@ -141,12 +116,21 @@ def job_request():
 
 @app.route('/api/sample/exists', methods = [ 'GET' ])
 def sample_exists():
+    try:
+        data = json.loads(request.data)
+    except Exception:
+        msg = 'body is not json serializable'
+        abort(400, msg)
+
+    if 'username' not in data:
+        msg = 'username is missing from body'
+        abort(400, msg)
 
     # auth validation
     if not request.headers['authorization']:
         abort(403, 'Header missing authenticaiton key')
 
-    auth_id = authenticat_token(request.headers['authorization'])
+    auth_id = authenticate_token(request.headers['authorization'], data['username'])
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')

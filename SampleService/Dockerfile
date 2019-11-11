@@ -9,4 +9,6 @@ ENV PYTHONUNBUFFERED=1
 
 COPY . .
 
+ENV AUTH_SERVER='http://localhost:5001'
+
 CMD [ "python", "./Controller.py" ]
