@@ -2,8 +2,8 @@ from flask import Flask
 from flask import request, abort, json, jsonify, g
 import re
 
-from Services.AuthService.AuthService import authenticat_token
-from Services.GeneratorService.GeneratorService import GeneratorService
+from Service.AuthService.AuthService import authenticate_token
+from Service.GeneratorService.GeneratorService import GeneratorService
 
 _gService = GeneratorService()
 
@@ -11,28 +11,32 @@ app = Flask(__name__)
 
 
 @app.route('/api/generator', methods = ['GET' ])
-def job_request():
+def generate_sound_request():
 
     # auth validation
     if not request.headers['authorization']:
         abort(403, 'Header missing authenticaiton key')
 
-    auth_id = authenticate_token(request.headers['authorization'])
+    try:
+        data = json.loads(request.data)
+    except Exception:
+        msg = 'body is not json serializable'
+        abort(400, msg)
+
+    if 'username' not in data:
+        msg = 'username is missing from body'
+        abort(400, msg)
+
+    auth_id = authenticate_token(request.headers['authorization'], data['username'])
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')
 
     if request.method == 'GET':
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
 
         if 'label' not in data:
             msg = 'label is missing from body'
             abort(400, msg)
-
 
         g_data = _gService.predict(data['label'])
 
@@ -52,7 +56,7 @@ def job_request():
     if not request.headers['authorization']:
         abort(403, 'Header missing authenticaiton key')
 
-    auth_id = authenticat_token(request.headers['authorization'])
+    auth_id = authenticate_token(request.headers['authorization'])
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')
@@ -83,4 +87,4 @@ def job_request():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=5020)
+    app.run(debug=False, port=5025)

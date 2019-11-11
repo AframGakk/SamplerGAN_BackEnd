@@ -1,15 +1,17 @@
 
 from Mocks.kickArray import data as kickData
+from Repositories.ModelRepo.ModelRepo import ModelRepo
+
+_mRepo = ModelRepo()
 
 class GeneratorService:
     def __init__(self):
-        self.KICK_MODEL = self.fetch_latest_model()
-
+        location = 'LOCATION'
+        self.KICK_MODEL = _mRepo.getModelByLocation(location)
 
     def fetch_latest_model(self):
         # TODO: link with model repo
         return kickData
-
 
     def predict(self, label):
         if label == 'KICK':
