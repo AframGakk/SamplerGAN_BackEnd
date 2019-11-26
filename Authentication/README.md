@@ -1,6 +1,17 @@
 # README
 # Authentication Service
 This is the service used to authenticate users and validate them.  
-Runs on port 5001 and it exposes two endpoints:  
-* /api/authenticate [HttpPost] - _Authenticates users_ return JWT token in response
-* /api/validate [HttpGet] - _Validates users_ returns User ID in response
+Runs on port 5050 and it exposes two endpoints:  
+* /api/authenticate [HttpPost] - _Authenticates users return JWT token in response_
+    ``` json
+    {
+        "Username": "username",
+	    "Password": "userpassword"
+    }
+    ```
+* /api/validate [HttpGet] - _Validates users returns User ID in response_
+    ``` json
+    {
+        "userId"
+    }
+    ```
