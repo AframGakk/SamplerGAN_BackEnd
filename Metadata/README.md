@@ -9,7 +9,6 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "sound_type": "sound type ID",
         "user": "user ID"
     }
-    ``` json
 * /api/user/{id}/folder/ [HttpGet] - _Get all folders by user id_  
     ``` json
     {
@@ -17,7 +16,7 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "parent": "parent folder ID",
         "user": "user ID"
     }
-    ``` json
+
 * /api/user/{id}/file/{id} [HttpGet] - _Get file by userid, fileid_  
     ``` json
     {
@@ -29,7 +28,6 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "user": "user ID",
         "fileCreated": "datetime of file created"
     }
-    ``` json
 * /api/user/{id}/folder/{id} [HttpGet] - _Get folder by userid, folderid_  
     ``` json
     {
@@ -40,7 +38,6 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "location": "folder location",
         "folderCreated": "datetime of file created"
     }
-    ``` json
 * /api/user/{id}/file/ [HttpPost] - _Create file by user id_  
     ``` json
     {
@@ -50,7 +47,6 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "Parent": "parent folder ID",
         "User": "user ID"
     }
-    ``` json
 * /api/user/{id}/folder/ [HttpPost] - _Create folder by user id_  
     ``` json
     {
@@ -59,18 +55,15 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "User": "user ID",
         "location": "folder location"
     }
-    ``` json
 * /api/file/{id} [HttpPatch] - _Update file partially by file id_  
     ``` json
     {
         "Name": "updated filename",
     }
-    ``` json
 * /api/folder/{id} [HttpPatch] - _Update folder partially by folder id_  
     ``` json
     {
         "Name": "updated foldername"
     }
-    ``` json
 * /api/file/{id} [HttpDelete] - _Delete file by fileid_  
 * /api/folder/{id} [HttpDelete] - _Delete folder by folderid_  
