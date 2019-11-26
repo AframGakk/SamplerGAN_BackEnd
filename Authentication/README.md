@@ -8,10 +8,8 @@ Runs on port 5050 and it exposes two endpoints:
         "Username": "username",
 	    "Password": "userpassword"
     }
-    ```
 * /api/validate [HttpGet] - _Validates users returns User ID in response_
     ``` json
     {
         "userId"
     }
-    ```
