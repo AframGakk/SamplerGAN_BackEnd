@@ -21,12 +21,15 @@ namespace SamplerGAN.UserService.WebApi.ExceptionHandlerExtensions
                     {
                         statusCode = (int) HttpStatusCode.NotFound;
                     }
-                    /*else if (exception is ModelFormatException)
+                    else if (exception is UnauthorizedException)
                     {
-                        statusCode = (int) HttpStatusCode.BadRequest;
+                        statusCode = (int) HttpStatusCode.Unauthorized;
                     }
-                    */
-                    // More errors ? Auth
+                    else if (exception is RequestElementsNeededException)
+                    {
+                        statusCode = (int) HttpStatusCode.PreconditionFailed;
+                    }
+                    // More errors ?
                     
                     context.Response.ContentType = "application/json"; // ContentType header as application/json
                     context.Response.StatusCode = statusCode; // This is needed to get the right Statuscode header in postman
