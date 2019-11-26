@@ -1,4 +1,8 @@
+using System;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.UserService.Models.Exceptions;
 using SamplerGAN.UserService.Models.InputModels;
@@ -10,8 +14,27 @@ namespace SamplerGAN.UserService.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // TODO Global error handling
-
+        // Helper function to consume Authentication WebApi
+        // to validate the user who is trying to access endpoints
+        static string _address = "http://localhost:5050/api/validate";
+        private string result;
+        private async Task<string> Validate(string jwtToken, string userName)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", jwtToken);
+            HttpResponseMessage response = await client.GetAsync(_address + "?username=" + userName);
+            var resp = response.IsSuccessStatusCode;
+            // If resp is false, then user in unauthenticated
+            // throw error
+            if(resp == false)
+            {
+                throw new UnauthorizedException();
+            }
+            result = await response.Content.ReadAsStringAsync();
+            // return user id
+            // question about if it's needed
+            return result;
+        }
         // DI
         private IUserServices _userService;
 
@@ -23,8 +46,25 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users [GET]
         [Route("")]
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var userList = _userService.GetAllUsers();
             return Ok(userList);
         }
@@ -32,8 +72,25 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users/{id} [GET]
         [Route("{id:int}", Name = "GetUserById")]
         [HttpGet]
-        public IActionResult GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var user = _userService.GetUserById(id);
             return Ok(user);
         }
@@ -41,12 +98,29 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users [POST]
         [Route("")]
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserInputModel body)
+        public async Task<IActionResult> CreateUser([FromBody] UserInputModel body)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
             if(!ModelState.IsValid)
             {
                 return BadRequest("The input model was not correct");
             }
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var newUserId = _userService.CreateUser(body);
             return StatusCode(201, newUserId);
         }
@@ -54,7 +128,25 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users/{id} [PATCH]
         [Route("{id:int}")]
         [HttpPatch]
-        public IActionResult UpdateUserById(int id, [FromBody] UserInputModel body) {
+        public async Task<IActionResult> UpdateUserById(int id, [FromBody] UserInputModel body)
+        {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _userService.UpdateUserById(id, body);
             return NoContent();
         }
@@ -62,7 +154,25 @@ namespace SamplerGAN.UserService.WebApi.Controllers
         //http://localhost:5000/api/users/{id} [DELETE]
         [Route("{id:int}")]
         [HttpDelete]
-        public IActionResult DeleteUserById(int id) {
+        public async Task<IActionResult> DeleteUserById(int id)
+        {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _userService.DeleteUserById(id);
             return NoContent();
         }

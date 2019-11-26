@@ -11,7 +11,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.ExceptionHandlerExtensions
         public static void UseGlobalExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(error => {
-                error.Run(async context => 
+                error.Run(async context =>
                 {
                     var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
                     var exception = exceptionHandlerFeature.Error;
@@ -23,13 +23,13 @@ namespace SamplerGAN.AuthenticationService.WebApi.ExceptionHandlerExtensions
                     }
                     else if (exception is ErrorValidatingUserException)
                     {
-                        statusCode = (int) HttpStatusCode.BadRequest;
+                        statusCode = (int) HttpStatusCode.Unauthorized;
                     }
                     else if (exception is MatchingUserJWTException)
                     {
-                        statusCode = (int) HttpStatusCode.Forbidden;
+                        statusCode = (int) HttpStatusCode.Unauthorized;
                     }
-                    
+
                     context.Response.ContentType = "application/json"; // ContentType header as application/json
                     context.Response.StatusCode = statusCode; // This is needed to get the right Statuscode header in postman
 

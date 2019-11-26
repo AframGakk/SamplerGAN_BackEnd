@@ -8,6 +8,7 @@ using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Services;
 using SamplerGAN.MetadataService.WebApi.Extensions;
 using SamplerGAN.MetadataService.WebApi.Models.Entities;
+using System.Net.Http;
 
 namespace SamplerGAN.MetadataService.WebApi.Controllers
 {
@@ -15,6 +16,27 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
     [ApiController]
     public class MetadataController : ControllerBase
     {
+        // Helper function to consume Authentication WebApi
+        // to validate the user who is trying to access endpoints
+        static string _address = "http://localhost:5050/api/validate";
+        private string result;
+        private async Task<string> Validate(string jwtToken, string userName)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", jwtToken);
+            HttpResponseMessage response = await client.GetAsync(_address + "?username=" + userName);
+            var resp = response.IsSuccessStatusCode;
+            // If resp is false, then user in unauthenticated
+            // throw error
+            if(resp == false)
+            {
+                throw new UnauthorizedException();
+            }
+            result = await response.Content.ReadAsStringAsync();
+            // return user id
+            // question about if it's needed
+            return result;
+        }
         // DI
         private IMetadataServices _metaService;
 
@@ -27,8 +49,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets all files by user id
         [Route("user/{userId:int}/file")]
         [HttpGet]
-        public IActionResult GetAllFilesByUserId(int userId)
+        public async Task<IActionResult> GetAllFilesByUserId(int userId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var files = _metaService.GetAllFilesByUserId(userId);
             if (!files.Any())
             {
@@ -41,8 +80,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets all folders by user id
         [Route("user/{userId:int}/folder")]
         [HttpGet]
-        public IActionResult GetAllFoldersByUserId(int userId)
+        public async Task<IActionResult> GetAllFoldersByUserId(int userId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var folders = _metaService.GetAllFoldersByUserId(userId);
             if(!folders.Any())
             {
@@ -55,8 +111,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Get file by userid and fileid ** Should be one file
         [Route("user/{userId:int}/file/{fileId:int}")]
         [HttpGet]
-        public IActionResult GetFileByUserIdAndFileId(int userId, int fileId)
+        public async Task<IActionResult> GetFileByUserIdAndFileId(int userId, int fileId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var file = _metaService.GetFileByUserIdAndFileId(userId, fileId);
             if(!file.Any())
             {
@@ -69,8 +142,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Gets folder by userid, folderid 
         [Route("user/{userId:int}/folder/{folderId:int}")]
         [HttpGet]
-        public IActionResult GetFolderByUserIdAndFolderId(int userId, int folderId)
+        public async Task<IActionResult> GetFolderByUserIdAndFolderId(int userId, int folderId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             var folder = _metaService.GetFolderByUserIdAndFolderId(userId, folderId);
             if(!folder.Any())
             {
@@ -83,8 +173,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create file by user id
         [Route("user/{userId:int}/file")]
         [HttpPost]
-        public IActionResult CreateFileByUserId([FromBody] FileInputModel body, int userId)
+        public async Task<IActionResult> CreateFileByUserId([FromBody] FileInputModel body, int userId)
         {   
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             if(!ModelState.IsValid)
             {
                 return BadRequest("The input model was not correct");
@@ -98,8 +205,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Create folder by user id
         [Route("user/{userId:int}/folder")]
         [HttpPost]
-        public IActionResult CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
+        public async Task<IActionResult> CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             if(!ModelState.IsValid)
             {
                 return BadRequest("The input model was not correct");
@@ -133,8 +257,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update partially file by file id
         [Route("file/{fileId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFilePartiallyByFileId([FromBody] FileInputModel body, int fileId)
+        public async Task<IActionResult> UpdateFilePartiallyByFileId([FromBody] FileInputModel body, int fileId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _metaService.UpdateFilePartiallyByFileId(body, fileId);
             return NoContent();
         }
@@ -143,8 +284,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Update partially folder by folder id
         [Route("folder/{folderId:int}")]
         [HttpPatch]
-        public IActionResult UpdateFolderPartiallyByFolderId([FromBody] FolderInputModel body, int folderId)
+        public async Task<IActionResult> UpdateFolderPartiallyByFolderId([FromBody] FolderInputModel body, int folderId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _metaService.UpdateFolderPartiallyByFolderId(body, folderId);
             return NoContent();
         }
@@ -153,8 +311,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Delete file by fileid
         [Route("file/{fileId:int}")]
         [HttpDelete]
-        public IActionResult DeleteFileById(int fileId)
+        public async Task<IActionResult> DeleteFileById(int fileId)
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _metaService.DeleteFileById(fileId);
             return NoContent();
         }
@@ -163,8 +338,25 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         // Delete folder by folderid
         [Route("folder/{folderId:int}")]
         [HttpDelete]
-        public IActionResult DeleteFolderById(int folderId) 
+        public async Task<IActionResult> DeleteFolderById(int folderId) 
         {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
             _metaService.DeleteFolderById(folderId);
             return NoContent();
         }
