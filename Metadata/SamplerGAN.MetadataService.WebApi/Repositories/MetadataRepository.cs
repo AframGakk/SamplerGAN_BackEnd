@@ -24,6 +24,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
             var entities = from items in _db.file
                             where(items.User == id)
                             select new FileDto {
+                                Id = items.id,
                                 Name = items.Name,
                                 Sound_type = items.Sound_type,
                                 User = items.User
@@ -36,6 +37,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
             var entities = from items in _db.folder
                             where(items.User == id)
                             select new FolderDto {
+                                Id = items.id,
                                 Name = items.Name,
                                 Parent = items.Parent,
                                 User = items.User

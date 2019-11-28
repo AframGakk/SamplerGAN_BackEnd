@@ -45,9 +45,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             _metaService = metaService;
         }
         
-        //http://localhost:5002/api/user/{id}/file/ [GET]
+        //http://localhost:5002/api/users/{id}/files/ [GET]
         // Gets all files by user id
-        [Route("user/{userId:int}/file")]
+        [Route("users/{userId:int}/files")]
         [HttpGet]
         public async Task<IActionResult> GetAllFilesByUserId(int userId)
         {
@@ -76,9 +76,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return Ok(files);
         }
         
-        //http://localhost:5002/api/user/{id}/folder/ [GET]
+        //http://localhost:5002/api/users/{id}/folders/ [GET]
         // Gets all folders by user id
-        [Route("user/{userId:int}/folder")]
+        [Route("users/{userId:int}/folders")]
         [HttpGet]
         public async Task<IActionResult> GetAllFoldersByUserId(int userId)
         {
@@ -109,7 +109,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         
         //http://localhost:5002/api/user/{id}/file/{id} [GET]
         // Get file by userid and fileid ** Should be one file
-        [Route("user/{userId:int}/file/{fileId:int}")]
+        [Route("users/{userId:int}/files/{fileId:int}")]
         [HttpGet]
         public async Task<IActionResult> GetFileByUserIdAndFileId(int userId, int fileId)
         {
@@ -138,9 +138,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return Ok(file);
         }
         
-        //http://localhost:5002/api/user/{id}/folder/{id} [GET]
+        //http://localhost:5002/api/users/{id}/folders/{id} [GET]
         // Gets folder by userid, folderid 
-        [Route("user/{userId:int}/folder/{folderId:int}")]
+        [Route("users/{userId:int}/folders/{folderId:int}")]
         [HttpGet]
         public async Task<IActionResult> GetFolderByUserIdAndFolderId(int userId, int folderId)
         {
@@ -169,9 +169,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return Ok(folder);
         }
         
-        //http://localhost:5002/api/user/{id}/file/ [POST]
+        //http://localhost:5002/api/users/{id}/files [POST]
         // Create file by user id
-        [Route("user/{userId:int}/file")]
+        [Route("users/{userId:int}/files")]
         [HttpPost]
         public async Task<IActionResult> CreateFileByUserId([FromBody] FileInputModel body, int userId)
         {   
@@ -201,9 +201,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return StatusCode(201);
         }
         
-        //http://localhost:5002/api/user/{id}/folder/ [POST]
+        //http://localhost:5002/api/users/{id}/folders [POST]
         // Create folder by user id
-        [Route("user/{userId:int}/folder")]
+        [Route("users/{userId:int}/folders")]
         [HttpPost]
         public async Task<IActionResult> CreateFolderByUserId([FromBody] FolderInputModel body, int userId)
         {
@@ -253,9 +253,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
         }
         */
 
-        //http://localhost:5002/api/file/{id} [PATCH]
+        //http://localhost:5002/api/files/{id} [PATCH]
         // Update partially file by file id
-        [Route("file/{fileId:int}")]
+        [Route("files/{fileId:int}")]
         [HttpPatch]
         public async Task<IActionResult> UpdateFilePartiallyByFileId([FromBody] FileInputModel body, int fileId)
         {
@@ -280,9 +280,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return NoContent();
         }
         
-        //http://localhost:5002/api/folder/{id} [PATCH]
+        //http://localhost:5002/api/folders/{id} [PATCH]
         // Update partially folder by folder id
-        [Route("folder/{folderId:int}")]
+        [Route("folders/{folderId:int}")]
         [HttpPatch]
         public async Task<IActionResult> UpdateFolderPartiallyByFolderId([FromBody] FolderInputModel body, int folderId)
         {
@@ -307,9 +307,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return NoContent();
         }
         
-        //http://localhost:5002/api/file/{id} [DELETE]
+        //http://localhost:5002/api/files/{id} [DELETE]
         // Delete file by fileid
-        [Route("file/{fileId:int}")]
+        [Route("files/{fileId:int}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteFileById(int fileId)
         {
@@ -334,9 +334,9 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             return NoContent();
         }
         
-        //http://localhost:5002/api/folder/{id} [DELETE]
+        //http://localhost:5002/api/folders/{id} [DELETE]
         // Delete folder by folderid
-        [Route("folder/{folderId:int}")]
+        [Route("folders/{folderId:int}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteFolderById(int folderId) 
         {

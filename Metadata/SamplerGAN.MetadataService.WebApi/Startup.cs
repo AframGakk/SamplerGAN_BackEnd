@@ -36,7 +36,7 @@ namespace SamplerGAN.MetadataService.WebApi
             services.AddTransient<IMetadataServices, MetadataServices>();
             services.AddTransient<IMetadataRepository, MetadataRepository>();
 
-            services.Configure<ApiBehaviorOptions>(opt => 
+            services.Configure<ApiBehaviorOptions>(opt =>
             {
                 opt.SuppressModelStateInvalidFilter = true;
             });
@@ -45,7 +45,7 @@ namespace SamplerGAN.MetadataService.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -53,8 +53,12 @@ namespace SamplerGAN.MetadataService.WebApi
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-            
+            }*/
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
             app.UseGlobalExceptionHandler();
             app.UseHttpsRedirection();
             app.UseMvc();
