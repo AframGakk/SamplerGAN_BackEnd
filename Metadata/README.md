@@ -2,14 +2,14 @@
 # Metadata Service
 This is the service used to get, create, update, update partially and delete files  
 and folder associated with a user. Runs on port 5099 and it exposes ten endpoints:  
-* /api/user/{id}/file/ [HttpGet] - _Get all files by user id_  
+* /api/users/{id}/files/ [HttpGet] - _Get all files by user id_  
     ``` json
     {
         "name": "filename",
         "sound_type": "sound type ID",
         "user": "user ID"
     }
-* /api/user/{id}/folder/ [HttpGet] - _Get all folders by user id_  
+* /api/users/{id}/folders/ [HttpGet] - _Get all folders by user id_  
     ``` json
     {
         "name": "foldername",
@@ -17,7 +17,7 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "user": "user ID"
     }
 
-* /api/user/{id}/file/{id} [HttpGet] - _Get file by userid, fileid_  
+* /api/users/{id}/files/{id} [HttpGet] - _Get file by userid, fileid_  
     ``` json
     {
         "id": "file ID",
@@ -28,7 +28,7 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "user": "user ID",
         "fileCreated": "datetime of file created"
     }
-* /api/user/{id}/folder/{id} [HttpGet] - _Get folder by userid, folderid_  
+* /api/users/{id}/folders/{id} [HttpGet] - _Get folder by userid, folderid_  
     ``` json
     {
         "id": "folder ID",
@@ -38,7 +38,7 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "location": "folder location",
         "folderCreated": "datetime of file created"
     }
-* /api/user/{id}/file/ [HttpPost] - _Create file by user id_  
+* /api/users/{id}/files/ [HttpPost] - _Create file by user id_  
     ``` json
     {
         "Name": "filename",
@@ -47,7 +47,7 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "Parent": "parent folder ID",
         "User": "user ID"
     }
-* /api/user/{id}/folder/ [HttpPost] - _Create folder by user id_  
+* /api/users/{id}/folders/ [HttpPost] - _Create folder by user id_  
     ``` json
     {
         "Name": "foldername",
@@ -55,15 +55,15 @@ and folder associated with a user. Runs on port 5099 and it exposes ten endpoint
         "User": "user ID",
         "location": "folder location"
     }
-* /api/file/{id} [HttpPatch] - _Update file partially by file id_  
+* /api/files/{id} [HttpPatch] - _Update file partially by file id_  
     ``` json
     {
         "Name": "updated filename",
     }
-* /api/folder/{id} [HttpPatch] - _Update folder partially by folder id_  
+* /api/folders/{id} [HttpPatch] - _Update folder partially by folder id_  
     ``` json
     {
         "Name": "updated foldername"
     }
-* /api/file/{id} [HttpDelete] - _Delete file by fileid_  
-* /api/folder/{id} [HttpDelete] - _Delete folder by folderid_  
+* /api/files/{id} [HttpDelete] - _Delete file by fileid_  
+* /api/folders/{id} [HttpDelete] - _Delete folder by folderid_  
