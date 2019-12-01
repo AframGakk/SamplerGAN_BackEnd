@@ -50,8 +50,8 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services
                         new Claim(ClaimTypes.Name, body.UserName)
                     }),
                     //Expires = DateTime.UtcNow.AddDays(7),
-                    // Takes 20 min to expire
-                    Expires = DateTime.UtcNow.AddMinutes(15),
+                    // Takes 60 min to expire
+                    Expires = DateTime.UtcNow.AddMinutes(55),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);

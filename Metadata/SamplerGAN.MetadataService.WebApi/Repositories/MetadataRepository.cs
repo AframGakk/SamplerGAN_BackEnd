@@ -27,7 +27,8 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                                 Id = items.id,
                                 Name = items.Name,
                                 Sound_type = items.Sound_type,
-                                User = items.User
+                                User = items.User,
+                                Parent = items.Parent
                             };
             
             return entities;
