@@ -20,7 +20,6 @@ namespace SamplerGAN.MetadataService.WebApi.Services
         {
             var files = _metaRepository.GetAllFilesByUserId(id);
             return files;
-
         }
 
         public IEnumerable<FolderDto> GetAllFoldersByUserId(int id) 
@@ -41,14 +40,25 @@ namespace SamplerGAN.MetadataService.WebApi.Services
             return folder;
         }
 
-        public void CreateFileByUserId(FileInputModel body, int userId)
+        public IEnumerable<FileMetadataDto> GetFileMetadataByFileId(int fileId)
         {
-            _metaRepository.CreateFileByUserId(body, userId);
+            var metadata = _metaRepository.GetFileMetadataByFileId(fileId);
+            return metadata;
         }
 
-        public void CreateFolderByUserId(FolderInputModel body, int userId)
+        public int CreateFileByUserId(FileInputModel body, int userId)
         {
-            _metaRepository.CreateFolderByUserId(body, userId);
+            return _metaRepository.CreateFileByUserId(body, userId);
+        }
+
+        public void CreateMetadataForFile(int fileId)
+        {
+            _metaRepository.CreateMetadataForFile(fileId);
+        }
+
+        public int CreateFolderByUserId(FolderInputModel body, int userId)
+        {
+            return _metaRepository.CreateFolderByUserId(body, userId);
         }
         public void UpdateFilePartiallyByFileId(FileInputModel body, int fileId)
         {

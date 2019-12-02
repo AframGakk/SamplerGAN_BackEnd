@@ -49,17 +49,16 @@ namespace SamplerGAN.UserService.Repositories.Implementations
         }
         public int CreateUser(UserInputModel body)
         {
-            var nextId = _db.user.Count() + 1;
-            _db.user.Add(new User
+            var newUser = new User
             {
-                id = nextId,
                 UserName = body.UserName,
                 FirstName = body.FirstName,
                 LastName = body.LastName,
                 Email = body.Email
-            });
+            };
+            _db.user.Add(newUser);
             _db.SaveChanges();
-            return nextId;
+            return newUser.id;
         }
         public void UpdateUserById(int id, UserInputModel body)
         {

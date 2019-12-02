@@ -168,6 +168,35 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             }
             return Ok(folder);
         }
+
+        [Route("metadata/{fileId:int}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFileMetadataByFileId(int fileId)
+        {
+            var token = Request.Headers["Authorization"];
+            var authToken = token.ToString();
+            // If Authorization header is not present 
+            // throw error
+            if(string.IsNullOrEmpty(authToken))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var queryString = Request.QueryString.ToString();
+            // If Querystring is empty throw error
+            if(string.IsNullOrEmpty(queryString))
+            {
+                throw new RequestElementsNeededException();
+            }
+            var userName = queryString.Split('=')[1];
+            // returns user id, is it needed ?
+            var result = await Validate(authToken, userName);
+            var metadata = _metaService.GetFileMetadataByFileId(fileId);
+            if(!metadata.Any())
+            {
+                throw new ResourceNotFoundException("No file metadata was found with these requirements");
+            }
+            return Ok(metadata);
+        }
         
         //http://localhost:5002/api/users/{id}/files [POST]
         // Create file by user id
@@ -196,9 +225,10 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
             {
                 return BadRequest("The input model was not correct");
             }
-            // vill ég skila einhverju meira hérna en bara created ?
-            _metaService.CreateFileByUserId(body, userId);
-            return StatusCode(201);
+            var newFileId = _metaService.CreateFileByUserId(body, userId);
+            // kalla hérna á _metaService
+            _metaService.CreateMetadataForFile(newFileId);
+            return StatusCode(201, newFileId);
         }
         
         //http://localhost:5002/api/users/{id}/folders [POST]
@@ -229,8 +259,8 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
                 return BadRequest("The input model was not correct");
             }
             // vill ég skila einhverju meira hérna en bara created ?
-            _metaService.CreateFolderByUserId(body, userId);
-            return StatusCode(201);
+            var newFolderId = _metaService.CreateFolderByUserId(body, userId);
+            return StatusCode(201, newFolderId);
         }
         
         // Do we need put if we have patch and create ???

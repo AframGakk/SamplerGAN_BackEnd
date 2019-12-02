@@ -10,6 +10,7 @@ namespace SamplerGAN.MetadataService.WebApi.Models.Entities
 
         public DbSet<File> file { get; set; }
         public DbSet<Folder> folder { get; set; }
+        public DbSet<File_Metadata> file_metadata { get; set; }
 
     }
 }

@@ -74,29 +74,77 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                             };
             return entity;
         }
-        public void CreateFileByUserId(FileInputModel filebody, int userId)
+
+        public IEnumerable<FileMetadataDto> GetFileMetadataByFileId(int fileId)
         {
-            _db.file.Add(new File 
+            var entity = from item in _db.file_metadata
+                            where(item.File_id == fileId)
+                            select new FileMetadataDto {
+                                id = item.id,
+                                File_id = item.File_id,
+                                Gain = item.gain,
+                                Attack = item.attack,
+                                Decay = item.decay,
+                                Hold = item.hold,
+                                Reverb = item.reverb,
+                                Delay = item.delay,
+                                Cutoff = item.cutoff,
+                                Reso = item.reso,
+                                Fx = item.fx,
+                                Envelopes = item.envelopes,
+                                Filters = item.filters
+                            };
+            
+            return entity;
+        }
+        public int CreateFileByUserId(FileInputModel filebody, int userId)
+        {
+            var newFile = new File 
             {
                 Name = filebody.Name,
                 Sound_type = filebody.Sound_type.Value,
                 Location = filebody.Location,
                 Parent = filebody.Parent.Value,
                 User = userId
+            };
+            _db.file.Add(newFile);
+            _db.SaveChanges();
+            return newFile.id;
+        }
+
+        public void CreateMetadataForFile(int fileId)
+        {
+            Console.WriteLine("POST METADATA UM :" + fileId);
+            _db.file_metadata.Add(new File_Metadata
+            {
+                File_id = fileId,
+                gain = 0,
+                attack = 0,
+                decay = 0,
+                hold = 0,
+                reverb = 0,
+                delay = 0,
+                cutoff = 0,
+                reso = 0,
+                fx = false,
+                envelopes = false,
+                filters = false
             });
             _db.SaveChanges();
         }
 
-        public void CreateFolderByUserId(FolderInputModel folderbody, int userId)
+        public int CreateFolderByUserId(FolderInputModel folderbody, int userId)
         {
-            _db.folder.Add(new Folder
+            var newFolder = new Folder
             {
                 Name = folderbody.Name,
                 Parent = folderbody.Parent.Value,
                 User = userId,
                 location = folderbody.Location
-            });
+            };
+            _db.folder.Add(newFolder);
             _db.SaveChanges();
+            return newFolder.id;
         }
         public void UpdateFilePartiallyByFileId(FileInputModel body, int fileId)
         {
