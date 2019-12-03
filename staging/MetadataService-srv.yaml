@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: metadata-service
+  labels:
+    run: metadata-service
+spec:
+  type: NodePort
+  selector:
+    app: metadata-service
+  ports:
+    - port: 5099
+      protocol: TCP

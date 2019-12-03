@@ -6,7 +6,8 @@ _sRepo = SampleRepo()
 class SampleService:
 
     def getFileByLocation(self, location):
-        return _sRepo.getFileByLocation(location)
+        data = _sRepo.getFileByLocation(location)
+        return data
 
 
     def saveFileByLocation(self, data, location):

@@ -1,0 +1,27 @@
+# This file configures the hello-world app which serves public web traffic.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: user-service
+# namespace: cepstralinstruments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: user-service
+  template:
+    metadata:
+      labels:
+        run: user-service
+    spec:
+      containers:
+        - name: sample-service
+          image: gcr.io/samplergan/user-service:latest
+          ports:
+            - name: main
+              protocol: TCP
+              containerPort: 5000
+          env:
+            - name: AUTH_SERVER
+              value: 'http://localhost:5001'
+
