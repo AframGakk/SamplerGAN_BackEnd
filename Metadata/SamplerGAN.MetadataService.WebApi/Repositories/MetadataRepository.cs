@@ -180,10 +180,12 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
         public void DeleteFileById(int fileId)
         {
             var entity =_db.file.FirstOrDefault(f => f.id == fileId);
+            var meta = _db.file_metadata.FirstOrDefault(f => f.File_id == fileId);
             if(entity == null)
             {
                 throw new ResourceNotFoundException("No file with this id: " + fileId);
             }
+            _db.file_metadata.Remove(meta);
             _db.file.Remove(entity);
             _db.SaveChanges();
         }
