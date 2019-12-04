@@ -1,9 +1,10 @@
-namespace SamplerGAN.MetadataService.WebApi.Models.Dtos
+using System.ComponentModel.DataAnnotations;
+
+namespace SamplerGAN.MetadataService.WebApi.Models.InputModels
 {
-  public class FileMetadataDto
+  public class MetadataInputModel
   {
-    public int id { get; set; }
-    public int File_id { get; set; }
+    //[Required(ErrorMessage = "File_id is required")]
     public double Gain { get; set; }
     public double Attack { get; set; }
     public double Decay { get; set; }
