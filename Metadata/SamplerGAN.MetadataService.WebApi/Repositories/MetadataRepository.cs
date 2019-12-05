@@ -28,6 +28,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
                        Id = items.id,
                        Name = items.Name,
                        Sound_type = items.Sound_type,
+                       Location = items.Location,
                        User = items.User,
                        Parent = items.Parent
                      };
@@ -102,7 +103,7 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
 
       return entity;
     }
-    // Helper function to return newly patch metadata to frontend
+    // Helper function to return newly updated metadata to frontend
     public IEnumerable<FileMetadataDto> GetFileMetadataById(int id)
     {
       var entity = from item in _db.file_metadata
@@ -143,7 +144,6 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
 
     public void CreateMetadataForFile(int fileId)
     {
-      Console.WriteLine("POST METADATA UM :" + fileId);
       _db.file_metadata.Add(new File_Metadata
       {
         File_id = fileId,
@@ -209,10 +209,6 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
 
     public IEnumerable<FileMetadataDto> UpdateMetadataById(MetadataInputModel body, int id)
     {
-
-      Console.WriteLine("Request is in repo");
-      Console.WriteLine(body);
-      Console.WriteLine(id);
       var entity = _db.file_metadata.FirstOrDefault(m => m.id == id);
       if (entity == null)
       {

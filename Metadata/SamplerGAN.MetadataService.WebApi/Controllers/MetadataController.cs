@@ -338,14 +338,11 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
     }
 
     //http://localhost:5002/api/metadata/{id} [PUT]
-    // Update partially metadata by file id
+    // Update partially metadata by id
     [Route("metadata/{fileId:int}")]
     [HttpPut]
-    public async Task<IActionResult> UpdateMetadataById([FromBody] MetadataInputModel body, int fileId)
+    public async Task<IActionResult> UpdateMetadataById([FromBody] MetadataInputModel body, int id)
     {
-      Console.WriteLine("Request is in controller");
-      Console.WriteLine(body.Gain);
-      Console.WriteLine(fileId);
       var token = Request.Headers["Authorization"];
       var authToken = token.ToString();
       // If Authorization header is not present 
@@ -363,7 +360,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
       var userName = queryString.Split('=')[1];
       // returns user id, is it needed ?
       var result = await Validate(authToken, userName);
-      var newMeta = _metaService.UpdateMetadataById(body, fileId);
+      var newMeta = _metaService.UpdateMetadataById(body, id);
       return StatusCode(202, newMeta);
     }
 
