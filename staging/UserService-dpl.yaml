@@ -23,5 +23,5 @@ spec:
               containerPort: 5000
           env:
             - name: AUTH_SERVER
-              value: 'http://localhost:5001'
+              value: 'http://localhost:5050'
 
