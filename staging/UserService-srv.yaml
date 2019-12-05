@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-service
+  labels:
+    run: user-service
+spec:
+  type: NodePort
+  selector:
+    run: user-service
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP

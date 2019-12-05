@@ -1,3 +1,6 @@
 flask
 google-cloud-storage
 requests
+numpy
+librosa
+soundfile

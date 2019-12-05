@@ -1,0 +1,27 @@
+# This file configures the hello-world app which serves public web traffic.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: metadata-service
+# namespace: cepstralinstruments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: metadata-service
+  template:
+    metadata:
+      labels:
+        run: metadata-service
+    spec:
+      containers:
+        - name: metadata-service
+          image: gcr.io/samplergan/metadata-service:latest
+          ports:
+            - name: main
+              protocol: TCP
+              containerPort: 5099
+          env:
+            - name: AUTH_SERVER
+              value: 'http://localhost:5001'
+
