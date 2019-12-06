@@ -339,7 +339,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
 
     //http://localhost:5002/api/metadata/{id} [PUT]
     // Update partially metadata by id
-    [Route("metadata/{fileId:int}")]
+    [Route("metadata/{id:int}")]
     [HttpPut]
     public async Task<IActionResult> UpdateMetadataById([FromBody] MetadataInputModel body, int id)
     {

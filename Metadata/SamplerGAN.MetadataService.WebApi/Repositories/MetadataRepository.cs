@@ -241,10 +241,14 @@ namespace SamplerGAN.MetadataService.WebApi.Repositories
       {
         throw new ResourceNotFoundException("No file with this id: " + fileId);
       }
+      // Deleting any metadata with foreign key relation with this file
       _db.file_metadata.Remove(meta);
+      _db.SaveChanges();
+
       _db.file.Remove(entity);
       _db.SaveChanges();
     }
+    // needs to delete all files that are in this folder check it
     public void DeleteFolderById(int folderId)
     {
       var entity = _db.folder.FirstOrDefault(f => f.id == folderId);

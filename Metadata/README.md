@@ -100,8 +100,6 @@ This is the service used to get, create, update, update partially and delete fil
 * /api/metadata/{id} [HttpPut] - _Update metadata by id, this input model needs to be filled, as seen below_
   ```json
   {
-    "id": "metadata ID",
-    "file_id": "file ID corresponding with metadata",
     "gain": "value of gain",
     "attack": "value of attack",
     "decay": "value of decay",
