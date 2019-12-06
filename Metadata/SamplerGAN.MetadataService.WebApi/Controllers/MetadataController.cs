@@ -367,6 +367,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
 
     //http://localhost:5002/api/files/{id} [DELETE]
     // Delete file by fileid
+    // Needs to delete metadata for that file also
     [Route("files/{fileId:int}")]
     [HttpDelete]
     public async Task<IActionResult> DeleteFileById(int fileId)
@@ -394,6 +395,7 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers
 
     //http://localhost:5002/api/folders/{id} [DELETE]
     // Delete folder by folderid
+    // Needs to check if this folder has any files and delete them to also their metadata
     [Route("folders/{folderId:int}")]
     [HttpDelete]
     public async Task<IActionResult> DeleteFolderById(int folderId)

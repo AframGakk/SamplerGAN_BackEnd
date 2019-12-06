@@ -18,7 +18,7 @@ This is the service used to get, get by id, create, update partially and  delete
         "email": "user email",
         "userCreated": "datetime of user created"
     }
-* /api/users [HttpPost] - _Create a user returns new userID, this input model is needed as seen below_  
+* /api/users [HttpPost] - _Create a user returns new userID, this input model needs to be filled, as seen below_  
     ``` json
     {
         "userName": "username",
