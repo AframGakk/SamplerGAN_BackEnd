@@ -9,7 +9,7 @@ using SamplerGAN.UserService.Models.InputModels;
 using SamplerGAN.UserService.Services.Interfaces;
 
 namespace SamplerGAN.UserService.WebApi.Controllers {
-    [Route ("api/users")]
+    [Route ("api/")]
     [ApiController]
     public class UserController : ControllerBase {
         // Helper function to consume Authentication WebApi
@@ -38,8 +38,16 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
             _userService = userService;
         }
 
+        // Helper function for GCP Kubernets healthchecks
+        //http://localhost:5000/api/healthchecks [GET]
+        [Route ("healthchecks")]
+        [HttpGet]
+        public IActionResult GetHealthCheck () {
+            return StatusCode (200);
+        }
+
         //http://localhost:5000/api/users [GET]
-        [Route ("")]
+        [Route ("users/")]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers () {
             var token = Request.Headers["Authorization"];
@@ -62,7 +70,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
         }
 
         //http://localhost:5000/api/users/{id} [GET]
-        [Route ("{id:int}", Name = "GetUserById")]
+        [Route ("users/{id:int}", Name = "GetUserById")]
         [HttpGet]
         public async Task<IActionResult> GetUserById (int id) {
             var token = Request.Headers["Authorization"];
@@ -85,7 +93,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
         }
 
         //http://localhost:5000/api/users [POST]
-        [Route ("")]
+        [Route ("users/")]
         [HttpPost]
         public IActionResult CreateUser ([FromBody] UserInputModel body) {
             /*
@@ -117,7 +125,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
         }
 
         //http://localhost:5000/api/users/{id} [PATCH]
-        [Route ("{id:int}")]
+        [Route ("users/{id:int}")]
         [HttpPatch]
         public async Task<IActionResult> UpdateUserById (int id, [FromBody] UserInputModel body) {
             var token = Request.Headers["Authorization"];
@@ -140,7 +148,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
         }
 
         //http://localhost:5000/api/users/{id} [DELETE]
-        [Route ("{id:int}")]
+        [Route ("users/{id:int}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteUserById (int id) {
             var token = Request.Headers["Authorization"];
