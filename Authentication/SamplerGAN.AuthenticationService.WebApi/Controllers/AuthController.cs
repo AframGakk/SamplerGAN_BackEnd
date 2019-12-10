@@ -5,7 +5,7 @@ using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
 using SamplerGAN.AuthenticationService.WebApi.Services;
 
 namespace SamplerGAN.AuthenticationService.WebApi.Controllers {
-  [Route ("api/")]
+  [Route ("api/auth/")]
   [ApiController]
   public class AuthController : ControllerBase {
     //DI
@@ -16,14 +16,14 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers {
     }
 
     // Helper function for GCP Kubernets healthchecks
-    //http://localhost:5050/api/healthchecks [GET]
+    //http://localhost:5050/api/auth/healthchecks [GET]
     [Route ("healthchecks")]
     [HttpGet]
     public IActionResult GetHealthCheck () {
       return StatusCode (200);
     }
 
-    //http://localhost:5050/api/authenticate [POST]
+    //http://localhost:5050/api/auth/authenticate [POST]
     // Authenticates user if username and password matches users in the database,
     // returns the users JWT token  
     [Route ("authenticate")]
@@ -34,7 +34,7 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers {
       return Ok (user);
     }
 
-    //http://localhost:5050/api/validate [GET]
+    //http://localhost:5050/api/auth/validate [GET]
     // If token and username matches then the user is validated 
     // and returns the user Id for other services
     [Route ("validate")]

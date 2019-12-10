@@ -14,7 +14,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
     public class UserController : ControllerBase {
         // Helper function to consume Authentication WebApi
         // to validate the user who is trying to access endpoints
-        static string _address = "http://localhost:5050/api/validate";
+        static string _address = "auth-service-srv:5050/api/auth/validate";
         private string result;
         private async Task<string> Validate (string jwtToken, string userName) {
             var client = new HttpClient ();
