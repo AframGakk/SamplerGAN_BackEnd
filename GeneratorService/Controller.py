@@ -21,29 +21,36 @@ def generate_sound_request():
         data = json.loads(request.data)
     except Exception:
         msg = 'body is not json serializable'
+        print(msg)
         abort(400, msg)
 
     if 'username' not in data:
         msg = 'username is missing from body'
+        print(msg)
         abort(400, msg)
 
     auth_id = authenticate_token(request.headers['authorization'], data['username'])
 
     if not auth_id:
+        print('authentication key is invalid')
         abort(403, 'Authentication key is invalid')
 
     if request.method == 'GET':
 
         if 'label' not in data:
             msg = 'label is missing from body'
+            print(msg)
             abort(400, msg)
 
-        g_data = _gService.predict(data['label'])
+        g_data = _gService.predict()
 
         if g_data == None:
             msg = 'label is incorrect'
+            print(msg)
             abort(400, msg)
 
+
+        print('g_data'.format(g_data))
 
         return json.dumps({ 'success': True, 'data': g_data })
 
@@ -51,40 +58,47 @@ def generate_sound_request():
 
 @app.route('/api/generator/version', methods = [ 'POST' ])
 def job_request():
-
     # auth validation
-    if not request.headers['authorization']:
+    if not request.headers['Authorization']:
         abort(403, 'Header missing authenticaiton key')
 
-    auth_id = authenticate_token(request.headers['authorization'])
+    try:
+        data = json.loads(request.data)
+    except Exception:
+        msg = 'body is not json serializable'
+        abort(400, msg)
+
+    if 'username' not in data:
+        msg = 'username is missing from body'
+        abort(400, msg)
+
+    auth_id = authenticate_token(request.headers['Authorization'], data['username'])
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')
 
-    if request.method == 'GET':
-        try:
-            data = json.loads(request.data)
-        except Exception:
-            msg = 'body is not json serializable'
-            abort(400, msg)
+    if request.method == 'POST':
 
-        if 'userId' not in data:
-            msg = 'userId is missing from body'
-            abort(400, msg)
-        elif 'location' not in data:
+        if 'location' not in data:
             msg = 'location is missing from body'
             abort(400, msg)
 
-        auth_pattern = '^{}/'.format(auth_id)
-        if not re.match(auth_pattern, data['location']):
-            msg = 'Forbidden access to folder'
-            abort(403, msg)
-
-
+        _gService.update_model(data['location'])
 
 
         return json.dumps({ 'success': True, 'location': data['location'] })
 
 
+
+@app.route('/healthcheck', methods = ['GET'])
+def status():
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
+def test_get_sound():
+
+    return _gService.predict()
+
+
 if __name__ == '__main__':
-    app.run(debug=False, port=5025)
+    app.run(host='0.0.0.0', debug=False, port=5025)

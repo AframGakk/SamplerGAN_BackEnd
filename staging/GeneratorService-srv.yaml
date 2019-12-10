@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-service-srv
+  name: generator-service-srv
   labels:
-    app: sample-service
+    app: generator-service
 spec:
   type: NodePort
   ports:
-  - port: 5020
+  - port: 5025
     name: tcp
   selector:
-    app: sample-service
+    app: generator-service

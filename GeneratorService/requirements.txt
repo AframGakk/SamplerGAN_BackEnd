@@ -1,1 +1,7 @@
 flask
+keras
+google-cloud-storage
+tensorflow
+
+# tensorflow==1.14
+# keras==2.2.5

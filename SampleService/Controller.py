@@ -20,7 +20,7 @@ def job_request():
         abort(400, msg)
 
     # auth validation
-    if not request.headers['authorization']:
+    if not 'Authorization' in request.headers:
         abort(403, 'Header missing authenticaiton key')
 
     if 'username' not in data:
@@ -154,8 +154,14 @@ def sample_exists():
     return json.dumps({ 'success': True, 'data': _sampleService.fileExistsInLocation(data['location']) })
 
 
+
+@app.route('/healthcheck', methods = ['GET'])
+def status():
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
 if __name__ == '__main__':
-    app.run(debug=False, port=5020)
+    app.run(host='0.0.0.0', debug=False, port=5020)
 
 
 

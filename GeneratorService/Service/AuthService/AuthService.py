@@ -1,7 +1,7 @@
 import requests
 from os import environ
 
-SERVER_URL = 'http://localhost:5001'#environ['AUTH_SERVER']
+SERVER_URL = environ['AUTH_SERVER']
 
 def authenticate_token(token, username):
     URL_END = '/api/validate'

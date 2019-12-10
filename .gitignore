@@ -11,3 +11,7 @@ dist/
 .idea/
 venv/
 __pycache__/
+
+
+*.h5
+bucket.json

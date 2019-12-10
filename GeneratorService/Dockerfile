@@ -12,12 +12,11 @@ ENV PYTHONUNBUFFERED=1
 
 COPY . .
 
-ENV AUTH_SERVER='http://localhost:5050'
+#ENV AUTH_SERVER='http://localhost:5050'
 
 # TODO: REMOVE
-ENV GOOGLE_APPLICATION_CREDENTIALS=./bucket.json
+#ENV GOOGLE_APPLICATION_CREDENTIALS=./bucket.json
 
-
-EXPOSE 5020
+EXPOSE 5025
 
 CMD [ "python", "./Controller.py" ]

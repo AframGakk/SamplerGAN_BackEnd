@@ -5,4 +5,6 @@ gcloud builds submit --tag gcr.io/samplergan/user-service ./UserService/
 gcloud builds submit --tag gcr.io/samplergan/auth-service ./Authentication/SamplerGAN.AuthenticationService.WebApi
 gcloud builds submit --tag gcr.io/samplergan/metadata-service ./Metadata/SamplerGAN.MetadataService.WebApi
 
+gcloud builds submit --tag gcr.io/samplergan/generator-service ./GeneratorService/
+
 
