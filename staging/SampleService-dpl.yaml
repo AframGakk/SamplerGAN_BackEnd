@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sample-service-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sample-service
+        version: v1
+    spec:
+      volumes:
+        - name: google-cloud-key
+          secret:
+            secretName: bucket-service-account
+      containers:
+      - name: sample-service
+        image: gcr.io/samplergan/sample-service:latest
+        volumeMounts:
+          - name: google-cloud-key
+            mountPath: /var/secrets/google
+        ports:
+        - containerPort: 5020
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 5020
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        env:
+          - name: AUTH_SERVER
+            value: 'http://wisebeatstudio.com'
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/secrets/google/key.json

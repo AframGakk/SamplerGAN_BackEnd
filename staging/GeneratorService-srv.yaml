@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: generator-service-srv
+  labels:
+    app: generator-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5025
+    name: tcp
+  selector:
+    app: generator-service

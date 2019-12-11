@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth-service-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-service
+        version: v1
+    spec:
+      containers:
+      - name: auth-service
+        image: gcr.io/samplergan/auth-service:latest
+        ports:
+        - containerPort: 5050
+        readinessProbe:
+          httpGet:
+            path: /api/auth/healthchecks
+            port: 5050
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        env:
+          - name: AUTH_SERVER
+            value: 'http://auth-service-srv:5050'
