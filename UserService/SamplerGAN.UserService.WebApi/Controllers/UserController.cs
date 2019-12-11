@@ -48,11 +48,16 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
 
         //Helper function for frontend
         //http://localhost:5000/api/helps [GET]
-        [Route ("users/{username}")]
+        [Route ("users/username")]
         [HttpGet]
-        public IActionResult GetIdByUsername ([FromRoute] string username) {
-
-            var userId = _userService.GetIdByUsername (username);
+        public IActionResult GetIdByUsername () {
+            var queryString = Request.QueryString.ToString ();
+            // If Querystring is empty throw error
+            if (string.IsNullOrEmpty (queryString)) {
+                throw new RequestElementsNeededException ();
+            }
+            var userName = queryString.Split ('=') [1];
+            var userId = _userService.GetIdByUsername (userName);
             return Ok (userId);
         }
 
