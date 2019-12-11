@@ -46,6 +46,21 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
             return StatusCode (200);
         }
 
+        //Helper function for frontend
+        //http://localhost:5000/api/helps [GET]
+        [Route ("users/username")]
+        [HttpGet]
+        public IActionResult GetIdByUsername () {
+            var queryString = Request.QueryString.ToString ();
+            // If Querystring is empty throw error
+            if (string.IsNullOrEmpty (queryString)) {
+                throw new RequestElementsNeededException ();
+            }
+            var userName = queryString.Split ('=') [1];
+            var userId = _userService.GetIdByUsername (userName);
+            return Ok (userId);
+        }
+
         //http://localhost:5000/api/users [GET]
         [Route ("users/")]
         [HttpGet]
