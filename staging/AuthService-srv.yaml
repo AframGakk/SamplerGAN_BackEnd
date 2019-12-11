@@ -1,20 +1,3 @@
-#kind: Service
-#apiVersion: v1
-#metadata:
-#  name: auth-service
-#  labels:
-#    run: auth-service
-#spec:
-#  type: NodePort
-#  selector:
-#    app: user-service
-#  ports:
-#    - port: 5050
-#      protocol: TCP
-
-
-
-
 
 apiVersion: v1
 kind: Service

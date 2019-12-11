@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request, abort, json, jsonify, g
+from flask_cors import CORS, cross_origin
 import re
 
 from Service.AuthService.AuthService import authenticate_token
@@ -8,13 +9,15 @@ from Service.GeneratorService.GeneratorService import GeneratorService
 _gService = GeneratorService()
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/api/generator', methods = ['GET' ])
+@cross_origin()
 def generate_sound_request():
 
     # auth validation
-    if not request.headers['authorization']:
+    if 'Authorization' not in request.headers:
         abort(403, 'Header missing authenticaiton key')
 
     try:
@@ -57,6 +60,7 @@ def generate_sound_request():
 
 
 @app.route('/api/generator/version', methods = [ 'POST' ])
+@cross_origin()
 def job_request():
     # auth validation
     if not request.headers['Authorization']:
@@ -91,6 +95,7 @@ def job_request():
 
 
 @app.route('/healthcheck', methods = ['GET'])
+@cross_origin()
 def status():
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 

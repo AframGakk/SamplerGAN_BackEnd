@@ -4,7 +4,7 @@ from os import environ
 SERVER_URL = environ['AUTH_SERVER']
 
 def authenticate_token(token, username):
-    URL_END = '/api/validate'
+    URL_END = '/api/auth/validate'
     URL = SERVER_URL + URL_END
 
     header = {'Authorization': token }

@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: user-service
+  name: user-service-v1
 # namespace: cepstralinstruments
 spec:
   replicas: 1
@@ -21,6 +21,12 @@ spec:
             - name: main
               protocol: TCP
               containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: api/healthchecks
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 5
           env:
             - name: AUTH_SERVER
               value: 'http://localhost:5050'

@@ -1,7 +1,5 @@
 flask
-keras
 google-cloud-storage
-tensorflow
-
-# tensorflow==1.14
-# keras==2.2.5
+tensorflow==1.14.0
+keras==2.2.5
+flask-cors

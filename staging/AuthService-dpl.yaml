@@ -17,7 +17,7 @@ spec:
         - containerPort: 5050
         readinessProbe:
           httpGet:
-            path: /api/healthchecks
+            path: /api/auth/healthchecks
             port: 5050
           initialDelaySeconds: 15
           periodSeconds: 5

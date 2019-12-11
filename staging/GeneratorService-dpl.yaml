@@ -30,6 +30,6 @@ spec:
           periodSeconds: 5
         env:
           - name: AUTH_SERVER
-            value: 'http://auth-service-srv:5050'
+            value: 'http://wisebeatstudio.com'
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /var/secrets/google/key.json

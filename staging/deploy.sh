@@ -19,4 +19,10 @@ kubectl apply -f ./staging/UserService-srv.yaml
 kubectl apply -f ./staging/MetadataService-dpl.yaml
 kubectl apply -f ./staging/MetadataService-srv.yaml
 
+# User service deployment
+kubectl apply -f ./staging/GeneratorService-dpl.yaml
+kubectl apply -f ./staging/GeneratorService-srv.yaml
+
+
+
 

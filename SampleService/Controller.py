@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request, abort, json, jsonify, g
+from flask_cors import CORS, cross_origin
 import re
 
 from Services.SampleService.SampleService import SampleService
@@ -8,9 +9,12 @@ from Services.AuthService.AuthService import authenticate_token
 _sampleService = SampleService()
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/api/sample', methods = ['POST', 'GET', 'DELETE', 'PUT' ])
+@cross_origin()
 def job_request():
 
     try:
@@ -19,15 +23,26 @@ def job_request():
         msg = 'body is not json serializable'
         abort(400, msg)
 
+    print('got throug body check')
+
+
     # auth validation
-    if not 'Authorization' in request.headers:
+    if 'Authorization' not in request.headers:
         abort(403, 'Header missing authenticaiton key')
+
+    print('got through auth in header')
+
 
     if 'username' not in data:
         msg = 'username is missing from body'
         abort(400, msg)
 
-    auth_id = authenticate_token(request.headers['authorization'], data['username'])
+    print(data['username'])
+    print(request.headers['Authorization'])
+
+    auth_id = authenticate_token(request.headers['Authorization'], data['username'])
+
+    print('got through auth')
 
     if not auth_id:
         abort(403, 'Authentication key is invalid')
@@ -115,6 +130,7 @@ def job_request():
 
 
 @app.route('/api/sample/exists', methods = [ 'GET' ])
+@cross_origin()
 def sample_exists():
     try:
         data = json.loads(request.data)
