@@ -17,3 +17,7 @@ Backend service to fetch users sound sample in their repository.
 
 #### Generator Service  
 Backend service to generate live samples.  
+
+## Team Members
+Ívar Kristinn Hallsson: ivar17@ru.is  
+Vilhjálmur Rúnar Vilhjálmsson: vilhjalmur12@ru.is
