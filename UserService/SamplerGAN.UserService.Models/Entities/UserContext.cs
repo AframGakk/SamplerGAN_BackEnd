@@ -3,12 +3,11 @@ using SamplerGAN.UserService.Models.Entities;
 
 namespace SamplerGAN.UserService.Models.Entities
 {
-    public class UserContext : DbContext
-    {
-        public UserContext(DbContextOptions<UserContext> opt) : base(opt) {}
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {}
+  public class UserContext : DbContext
+  {
+    public UserContext(DbContextOptions<UserContext> opt) : base(opt) { }
 
-        public DbSet<User> user { get; set; }
-    
-    }
+    public DbSet<User> user { get; set; }
+
+  }
 }
