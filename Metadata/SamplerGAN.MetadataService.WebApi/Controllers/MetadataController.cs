@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SamplerGAN.MetadataService.WebApi.Extensions;
-using SamplerGAN.MetadataService.WebApi.Models.Entities;
 using SamplerGAN.MetadataService.WebApi.Models.Exceptions;
 using SamplerGAN.MetadataService.WebApi.Models.InputModels;
 using SamplerGAN.MetadataService.WebApi.Services;
@@ -30,7 +26,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
       }
       result = await response.Content.ReadAsStringAsync ();
       // return user id
-      // question about if it's needed
       return result;
     }
     // DI
@@ -66,7 +61,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var files = _metaService.GetAllFilesByUserId (userId);
       if (!files.Any ()) {
@@ -93,7 +87,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var folders = _metaService.GetAllFoldersByUserId (userId);
       if (!folders.Any ()) {
@@ -120,7 +113,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var file = _metaService.GetFileByUserIdAndFileId (userId, fileId);
       if (!file.Any ()) {
@@ -147,7 +139,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var folder = _metaService.GetFolderByUserIdAndFolderId (userId, folderId);
       if (!folder.Any ()) {
@@ -174,7 +165,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var metadata = _metaService.GetFileMetadataByFileId (fileId);
       if (!metadata.Any ()) {
@@ -207,7 +197,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         return BadRequest ("The input model was not correct");
       }
       var newFileId = _metaService.CreateFileByUserId (body, userId);
-      // kalla hérna á _metaService
       _metaService.CreateMetadataForFile (newFileId);
       return StatusCode (201, newFileId);
     }
@@ -230,35 +219,13 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       if (!ModelState.IsValid) {
         return BadRequest ("The input model was not correct");
       }
-      // vill ég skila einhverju meira hérna en bara created ?
       var newFolderId = _metaService.CreateFolderByUserId (body, userId);
       return StatusCode (201, newFolderId);
     }
-
-    // Do we need put if we have patch and create ???
-    //http://localhost:5002/api/file/{id} [PUT]
-    // Update file by file id
-    /*[Route("file/{fileId:int}")]
-    [HttpPut]
-    public IActionResult UpdateFileByFileId(int fileId)
-    {
-        return Ok();
-    }
-
-    //http://localhost:5002/api/folder/{id} [PUT]
-    // Update folder by folder id
-    [Route("folder/{folderId:int}")]
-    [HttpPut]
-    public IActionResult UpdateFolderByFolderId(int folderId)
-    {
-        return Ok();
-    }
-    */
 
     //http://localhost:5099/api/metadata/files/{id} [PATCH]
     // Update partially file by file id
@@ -278,7 +245,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       _metaService.UpdateFilePartiallyByFileId (body, fileId);
       return NoContent ();
@@ -302,7 +268,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       _metaService.UpdateFolderPartiallyByFolderId (body, folderId);
       return NoContent ();
@@ -326,7 +291,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       var newMeta = _metaService.UpdateMetadataById (body, id);
       return StatusCode (202, newMeta);
@@ -351,7 +315,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       _metaService.DeleteFileById (fileId);
       return NoContent ();
@@ -376,7 +339,6 @@ namespace SamplerGAN.MetadataService.WebApi.Controllers {
         throw new RequestElementsNeededException ();
       }
       var userName = queryString.Split ('=') [1];
-      // returns user id, is it needed ?
       var result = await Validate (authToken, userName);
       _metaService.DeleteFolderById (folderId);
       return NoContent ();

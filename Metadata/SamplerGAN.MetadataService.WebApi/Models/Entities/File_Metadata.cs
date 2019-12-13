@@ -1,7 +1,5 @@
-namespace SamplerGAN.MetadataService.WebApi.Models.Entities
-{
-  public class File_Metadata
-  {
+namespace SamplerGAN.MetadataService.WebApi.Models.Entities {
+  public class File_Metadata {
     public int id { get; set; }
     public int File_id { get; set; }
     public double gain { get; set; }

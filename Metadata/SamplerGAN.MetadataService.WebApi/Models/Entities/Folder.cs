@@ -1,9 +1,7 @@
 using System;
 
-namespace SamplerGAN.MetadataService.WebApi.Models.Entities
-{
-    public class Folder
-    {
+namespace SamplerGAN.MetadataService.WebApi.Models.Entities {
+    public class Folder {
         public int id { get; set; }
         public string Name { get; set; }
         public int Parent { get; set; }

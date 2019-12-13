@@ -1,9 +1,7 @@
 using System;
 
-namespace SamplerGAN.MetadataService.WebApi.Models.Entities
-{
-    public class File
-    {
+namespace SamplerGAN.MetadataService.WebApi.Models.Entities {
+    public class File {
         public int id { get; set; }
         public string Name { get; set; }
         public int Sound_type { get; set; }
