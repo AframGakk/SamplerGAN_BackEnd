@@ -57,6 +57,7 @@ namespace SamplerGAN.UserService.WebApi.Controllers {
                 throw new RequestElementsNeededException ();
             }
             var userName = queryString.Split ('=') [1];
+            Console.WriteLine (userName);
             var userId = _userService.GetIdByUsername (userName);
             return Ok (userId);
         }

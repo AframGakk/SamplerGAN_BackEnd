@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using SamplerGAN.AuthenticationService.WebApi.Models.Entities;
 using SamplerGAN.AuthenticationService.WebApi.Models.Exceptions;
@@ -39,13 +38,9 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers {
     // and returns the user Id for other services
     [Route ("validate")]
     [HttpGet]
-    //public IActionResult Validate(string token, string username)
     public IActionResult Validate (string username) {
       // Takes the JWT token from Authorization header
       var token = Request.Headers["Authorization"];
-      // TESTING - Take out later
-      //Console.WriteLine("Controller Validate");
-      //Console.WriteLine(token);
 
       // Returns username with that token
       var user = _loginService.Validate (token);
@@ -57,11 +52,9 @@ namespace SamplerGAN.AuthenticationService.WebApi.Controllers {
       // If the incoming username matches the token username
       if (user == username) {
         var userId = _loginService.GetUserId (username);
-        //return StatusCode(202, true);
         return StatusCode (202, userId);
       }
       throw new MatchingUserJWTException ();
-      //return StatusCode(403, new { message = "User does not match the JWT token provided" });
     }
 
   }
