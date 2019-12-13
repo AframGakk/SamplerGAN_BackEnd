@@ -50,8 +50,8 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services {
 
         return userToken;
       }
-      // ??? Take out before final
-      return "HelloWhatToDoHere?";
+
+      return "WeOutHere!";
     }
 
     public string Validate (string token) {
@@ -71,10 +71,6 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services {
       Claim usernameClaim = identity.FindFirst (ClaimTypes.Name);
       username = usernameClaim.Value;
 
-      // TESTING - Take out before final
-      //Console.WriteLine("Hæ er í LoginService");
-      //Console.WriteLine(username);
-
       return username;
     }
 
@@ -86,7 +82,6 @@ namespace SamplerGAN.AuthenticationService.WebApi.Services {
         if (jwtToken == null)
           return null;
 
-        //byte[] key = Convert.FromBase64String(_appSettings.Secret);
         var key = Encoding.ASCII.GetBytes (_appSettings.Secret);
 
         TokenValidationParameters parameters = new TokenValidationParameters () {
